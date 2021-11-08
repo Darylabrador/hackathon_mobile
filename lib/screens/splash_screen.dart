@@ -16,6 +16,7 @@ class SplashScreen extends StatelessWidget {
             fit: BoxFit.fitHeight,
           ),
         ),
+        child: null,
       ),
     );
   }
