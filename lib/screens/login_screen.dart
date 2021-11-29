@@ -4,7 +4,7 @@ import '../layout/custom_background_scroll.dart';
 import '../widgets/auth/auth_form.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const routeName = "/login";
+  static const routeName = "/";
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
