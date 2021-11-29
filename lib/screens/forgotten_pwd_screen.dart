@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../layout/custom_background.dart';
+
+import '../layout/custom_background_scroll.dart';
+import '../widgets/resetPwd/displayed_reset_form.dart';
 
 class ForgottenPwdScreen extends StatelessWidget {
   static const routeName = '/forgotten';
@@ -7,10 +9,15 @@ class ForgottenPwdScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomBackground(
+    return Scaffold(
+      body: CustomBackgroundScroll(
         ch: Center(
-          child: Text("forgotten page"),
+          child: Column(
+            children: const [
+              Text("test1"),
+              DisplayedResetForm(),
+            ],
+          ),
         ),
       ),
     );

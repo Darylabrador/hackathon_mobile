@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../layout/custom_background.dart';
+
+import '../layout/custom_background_scroll.dart';
+import '../widgets/auth/auth_form.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = "/login";
@@ -7,10 +9,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomBackground(
+    return Scaffold(
+      body: CustomBackgroundScroll(
         ch: Center(
-          child: Text("login page"),
+          child: Column(
+            children: const [
+              Text("test1"),
+              AuthForm()
+            ],
+          ),
         ),
       ),
     );
