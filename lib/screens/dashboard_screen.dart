@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../layout/custom_background.dart';
+import '../layout/custom_background_scroll.dart';
+
+import '../widgets/components/card_header.dart';
 
 class DashboardScreen extends StatelessWidget {
   static const routeName = '/dashboard';
@@ -7,10 +9,20 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomBackground(
+    final mediaQuery = MediaQuery.of(context);
+
+    return Scaffold(
+      body: CustomBackgroundScroll(
         ch: Center(
-          child: Text("dashboard page"),
+          child: Column(
+            children: [
+              CardHeader.content(
+                context: context,
+                mediaQuery: mediaQuery,
+                topSpace: SizedBox(height: mediaQuery.size.height * 0.08),
+              ),
+            ],
+          ),
         ),
       ),
     );

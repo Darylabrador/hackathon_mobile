@@ -6,12 +6,18 @@ class CustomBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceOrientation = MediaQuery.of(context).orientation;
+
     return Container(
       height: double.infinity,
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/background.png"),
+          image: AssetImage(
+            deviceOrientation == Orientation.landscape
+                ? "assets/images/background_landscape.png"
+                : "assets/images/background.png",
+          ),
           fit: BoxFit.cover,
         ),
       ),

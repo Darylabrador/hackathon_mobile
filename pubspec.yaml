@@ -66,6 +66,8 @@ flutter:
   assets:
     - assets/images/background.png
     - assets/images/splashscreen.png
+    - assets/images/background_landscape.png
+    - assets/images/splashscreen_landscape.png
     - assets/images/default.png
     - assets/images/secure.png
 
