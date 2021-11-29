@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomBackground extends StatelessWidget {
-  const CustomBackground(this.childElement, {Key? key}) : super(key: key);
-  final dynamic childElement;
+  final Widget? ch;
+  const CustomBackground({Key? key, this.ch}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,10 +12,10 @@ class CustomBackground extends StatelessWidget {
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/background.png"),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.cover,
         ),
       ),
-      child: childElement,
+      child: ch,
     );
   }
 }

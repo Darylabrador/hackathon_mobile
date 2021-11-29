@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
+import '../layout/custom_background.dart';
 
 class SplashScreen extends StatelessWidget {
+  static const routeName = "/splash";
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/splashscreen.png"),
-            fit: BoxFit.fitHeight,
-          ),
-        ),
-        child: null,
-      ),
-    );
+    return const CustomBackground();
   }
 }
