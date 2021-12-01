@@ -17,9 +17,14 @@ class CardHeader {
           "Alternatives au cash",
           style: Theme.of(context).textTheme.headline1,
         ),
+        const SizedBox(height: 10),
         const SizedBox(
-          width: 250.0,
-          child: Divider(),
+          width: 290.0,
+          child: Divider(
+            height: 1,
+            thickness: 2,
+            color: Colors.black26,
+          ),
         ),
         const SizedBox(height: 50),
       ],

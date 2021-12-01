@@ -15,19 +15,16 @@ class AuthProvider with ChangeNotifier {
   DateTime? _expiryDate;
   Timer? _authTimer;
 
-
   /// retrieve identity
   String? get identity {
     if (_identity != null) return _identity;
     return "";
   }
 
-
   /// retrieve boolean about isAuth state
   bool get isAuth {
     return _token != null;
   }
-
 
   /// retrieve token
   String? get token {
@@ -39,11 +36,21 @@ class AuthProvider with ChangeNotifier {
     return null;
   }
 
-
   /// function to log users
   Future<Map<String, dynamic>> login(String email, String password) async {
     final url = Uri.parse("${ConstantVariables.startingURL}/login");
-    final autorizedRoles = [];
+    final autorizedRoles = [
+      'chef equipe',
+      'chef de projet',
+      "gestion de projet",
+      'porteur de projet',
+      "marketing",
+      "commercial",
+      "finance",
+      "developpement",
+      "communication",
+      'invite',
+    ];
     try {
       final response = await http.post(
         url,
@@ -72,7 +79,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-
   /// function to set sharedpreference in the app
   Future<void> _setSharedPreferences(
     String? token,
@@ -88,24 +94,27 @@ class AuthProvider with ChangeNotifier {
     await prefs.setString("userData", userData);
   }
 
-
   /// function to try auto login user depending on sharedpreferences
   Future<bool> tryAutoLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey("userData")) return false;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey("userData")) return false;
 
-    final extractData = jsonDecode(prefs.getString("userData")!) as Map<String, Object>;
-    final expiryData = DateTime.parse(extractData['expiryDate'] as String);
-    if (expiryData.isBefore(DateTime.now())) return false;
+      final extractData = jsonDecode(prefs.getString("userData")!) as Map<String, dynamic>;
+      final expiryData = DateTime.parse(extractData['expiryDate'] as String);
+      if (expiryData.isBefore(DateTime.now())) return false;
 
-    _expiryDate = expiryData;
-    _token = extractData["token"] as String;
-    _identity = extractData["identity"] as String;
-    notifyListeners();
-    _autoLogout();
-    return true;
+      _expiryDate = expiryData;
+      _token = extractData["token"] as String;
+      _identity = extractData["identity"] as String;
+
+      notifyListeners();
+      _autoLogout();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
-
 
   /// function to logout users
   Future<void> logout() async {
@@ -121,7 +130,6 @@ class AuthProvider with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove("userData");
   }
-
 
   /// function to set timer to auto logout user when token expired
   void _autoLogout() {

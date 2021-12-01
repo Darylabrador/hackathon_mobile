@@ -20,7 +20,7 @@ Cette ligne de commande permettra de s'assurer que les dépendances nécessaires
 
 Cette ligne de commande permet de lancer l'application mobile en mode debug :
 
-- flutter run
+- flutter run --no-sound-null-safety
 
 ## Pour générer l'APK :
 

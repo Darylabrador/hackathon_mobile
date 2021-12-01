@@ -15,6 +15,7 @@ class LoginScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomBackgroundScroll(
         ch: Center(
           child: Column(
@@ -22,13 +23,14 @@ class LoginScreen extends StatelessWidget {
               CardHeader.content(
                 context: context,
                 mediaQuery: mediaQuery,
-                topSpace: SizedBox(height: mediaQuery.size.height * 0.2),
+                topSpace: SizedBox(height: mediaQuery.size.height * 0.15),
               ),
-              const CustomCard(
-                width: 400.0,
+              CustomCard(
+                width: mediaQuery.size.width * 0.8,
                 title: "Connexion",
-                cardWidget: AuthForm(),
+                cardWidget: const AuthForm(),
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),

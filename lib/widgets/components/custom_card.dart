@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  final double width;
+  final dynamic width;
   final String title;
   final Widget cardWidget;
 
@@ -15,20 +15,31 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+        side: const BorderSide(
+          color: Colors.black26,
+          width: 1.0,
+        ),
+      ),
       elevation: 5,
       child: Container(
         width: width,
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
             Text(
               title,
               style: Theme.of(context).textTheme.headline3,
             ),
-            const SizedBox(height: 5),
-            const Divider(),
-            cardWidget,
+            const SizedBox(height: 8),
+            const Divider(color: Colors.black26),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: cardWidget,
+            ),
           ],
         ),
       ),

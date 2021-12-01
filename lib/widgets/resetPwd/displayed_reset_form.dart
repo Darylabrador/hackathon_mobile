@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './ask_reset_form.dart';
 import './act_reset_form.dart';
 
-class DisplayedResetForm extends StatefulWidget {
+import '../../providers/reset_pwd_forgotten_provider.dart';
+
+class DisplayedResetForm extends StatelessWidget {
   const DisplayedResetForm({Key? key}) : super(key: key);
 
   @override
-  State<DisplayedResetForm> createState() => _DisplayedResetFormState();
-}
-
-class _DisplayedResetFormState extends State<DisplayedResetForm> {
-  @override
   Widget build(BuildContext context) {
-    return Container();
+    final _isResettingAskForm =
+        Provider.of<ResetPwdForgottenProvider>(context).isResettingAskForm;
+    if (_isResettingAskForm) {
+      return const AskResetForm();
+    } else {
+      return const ActResetForm();
+    }
   }
 }

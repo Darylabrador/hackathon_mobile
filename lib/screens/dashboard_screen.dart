@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../layout/custom_background_scroll.dart';
 
+import '../widgets/navigation/app_drawer.dart';
 import '../widgets/components/card_header.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -12,6 +13,8 @@ class DashboardScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
+      appBar: AppBar(),
+      drawer: const AppDrawer(),
       body: CustomBackgroundScroll(
         ch: Center(
           child: Column(
