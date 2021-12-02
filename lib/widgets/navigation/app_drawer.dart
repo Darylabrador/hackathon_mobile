@@ -52,33 +52,41 @@ class AppDrawer extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 8,
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/images/default.png"),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              FittedBox(
-                                child: Text(
-                                  Provider.of<AuthProvider>(
-                                          customContext ?? context)
-                                      .identity as String,
-                                  style: const TextStyle(color: Colors.white),
+                      child: InkWell(
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage("assets/images/default.png"),
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                FittedBox(
+                                  child: Text(
+                                    Provider.of<AuthProvider>(
+                                            customContext ?? context)
+                                        .identity as String,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        onDoubleTap: () {
+                          RouteService.generalRoute(
+                            AccountSettingsScreen.routeName,
+                            customContext ?? context,
+                          );
+                        },
                       ),
                     ),
                     Expanded(
