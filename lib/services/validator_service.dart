@@ -26,4 +26,21 @@ class ValidatorService {
     }
     return null;
   }
+
+  static String? validateField(String? value) {
+    if (value!.trim().isEmpty) {
+      return "Veuillez saisir votre mot de passe";
+    }
+    return null;
+  }
+
+  static String? validateAge(String? value) {
+    if (value!.trim().isEmpty) {
+      return 'Veuillez saisir votre age';
+    }
+    if (!value.contains(RegExp(r'^[0-9]{2}'))) {
+      return 'Il faut que des chiffres';
+    }
+    return null;
+  }
 }

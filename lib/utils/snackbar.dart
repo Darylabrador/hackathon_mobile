@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Snackar {
+class Snackbar {
   static void showScaffold(
     String message,
     bool isSuccess,

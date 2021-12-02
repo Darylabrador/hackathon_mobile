@@ -35,14 +35,14 @@ class _AuthFormState extends State<AuthForm> {
         passwordController.text.trim(),
       );
 
-      Snackar.showScaffold(result['message'], result['success'], context);
+      Snackbar.showScaffold(result['message'], result['success'], context);
 
       if (result['success']) {
         _formKey.currentState!.reset();
         Navigator.of(context).pushReplacementNamed(DashboardScreen.routeName);
       }
     } catch (e) {
-      Snackar.showScaffold(e.toString(), false, context);
+      Snackbar.showScaffold(e.toString(), false, context);
     }
   }
 

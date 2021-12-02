@@ -35,7 +35,7 @@ class _ActResetFormState extends State<ActResetForm> {
         passwordConfirm: passwordConfirmController.text.trim(),
       );
 
-      Snackar.showScaffold(result["message"], result["success"], context);
+      Snackbar.showScaffold(result["message"], result["success"], context);
 
       if (result["success"]) {
         Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
@@ -43,7 +43,7 @@ class _ActResetFormState extends State<ActResetForm> {
 
       _formKey.currentState!.reset();
     } catch (e) {
-      Snackar.showScaffold(e.toString(), false, context);
+      Snackbar.showScaffold(e.toString(), false, context);
     }
   }
 

@@ -33,10 +33,10 @@ class _AskResetFormState extends State<AskResetForm> {
       ).getForgottenResetToken(email: emailController.text.trim());
 
       if(!result['success']) {
-        Snackar.showScaffold(result['message'], result['success'], context);
+        Snackbar.showScaffold(result['message'], result['success'], context);
       }
     } catch (e) {
-      Snackar.showScaffold(e.toString(), false, context);
+      Snackbar.showScaffold(e.toString(), false, context);
     }
   }
 

@@ -6,6 +6,7 @@ import './screens/project_screen.dart';
 import './screens/recapitulatif_screen.dart';
 import './screens/team_management_screen.dart';
 import './screens/account_settings_screen.dart';
+import './screens/account_delete_confirm_screen.dart';
 
 class Routes {
   static Map<String, WidgetBuilder> appRoutes() {
@@ -16,6 +17,7 @@ class Routes {
       RecapitulatifScreen.routeName: (ctx) => const RecapitulatifScreen(),
       TeamManagementScreen.routeName: (ctx) => const TeamManagementScreen(),
       AccountSettingsScreen.routeName: (ctx) => const AccountSettingsScreen(),
+      AccountDeleteConfirmScreen.routeName: (ctx) => const AccountDeleteConfirmScreen(),
     };
   }
 }
