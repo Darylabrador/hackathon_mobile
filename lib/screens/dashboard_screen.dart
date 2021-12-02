@@ -13,7 +13,9 @@ class DashboardScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Mon dashboard"),
+      ),
       drawer: const AppDrawer(),
       body: CustomBackgroundScroll(
         ch: Center(

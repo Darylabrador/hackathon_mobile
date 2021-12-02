@@ -5,9 +5,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../utils/palette.dart';
 
 import '../../providers/auth_provider.dart';
+import '../../services/route_service.dart';
 
 import '../../screens/login_screen.dart';
 import '../../screens/dashboard_screen.dart';
+import '../../screens/project_screen.dart';
+import '../../screens/recapitulatif_screen.dart';
+import '../../screens/team_management_screen.dart';
+import '../../screens/account_settings_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   final BuildContext? customContext;
@@ -60,7 +65,9 @@ class AppDrawer extends StatelessWidget {
                                 backgroundImage:
                                     AssetImage("assets/images/default.png"),
                               ),
-                              const SizedBox(height: 10,),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               FittedBox(
                                 child: Text(
                                   Provider.of<AuthProvider>(
@@ -82,12 +89,6 @@ class AppDrawer extends StatelessWidget {
                         color: Colors.white,
                         onPressed: () {
                           Navigator.of(customContext ?? context)
-                              .pushReplacement(
-                            MaterialPageRoute(
-                              builder: (ctx) => const LoginScreen(),
-                            ),
-                          );
-                          Navigator.of(customContext ?? context)
                               .pushReplacementNamed(
                             LoginScreen.routeName,
                           );
@@ -105,6 +106,86 @@ class AppDrawer extends StatelessWidget {
             const Divider(
               color: Colors.white,
               thickness: 1,
+            ),
+            ListTile(
+              leading: const Icon(
+                MdiIcons.viewDashboard,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Mon dashboard',
+                style: Theme.of(customContext ?? context).textTheme.headline4,
+              ),
+              onTap: () {
+                RouteService.welcomeRoute(
+                  DashboardScreen.routeName,
+                  customContext ?? context,
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                MdiIcons.lightbulbOn,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Mon projet',
+                style: Theme.of(customContext ?? context).textTheme.headline4,
+              ),
+              onTap: () {
+                RouteService.generalRoute(
+                  ProjectScreen.routeName,
+                  customContext ?? context,
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                MdiIcons.fileOutline,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Mon récapitulatif',
+                style: Theme.of(customContext ?? context).textTheme.headline4,
+              ),
+              onTap: () {
+                RouteService.generalRoute(
+                  RecapitulatifScreen.routeName,
+                  customContext ?? context,
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                MdiIcons.accountGroup,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Mon équipe',
+                style: Theme.of(customContext ?? context).textTheme.headline4,
+              ),
+              onTap: () {
+                RouteService.generalRoute(
+                  TeamManagementScreen.routeName,
+                  customContext ?? context,
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                MdiIcons.accountCog,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Mon compte',
+                style: Theme.of(customContext ?? context).textTheme.headline4,
+              ),
+              onTap: () {
+                RouteService.generalRoute(
+                  AccountSettingsScreen.routeName,
+                  customContext ?? context,
+                );
+              },
             ),
           ],
         ),
