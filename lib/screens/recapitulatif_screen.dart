@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import '../layout/custom_background.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/recap_provider.dart';
+import '../layout/custom_background.dart';
 import '../widgets/navigation/app_drawer.dart';
-import '../widgets/components/card_header.dart';
+import '../widgets/recapitulatif/recap_card.dart';
 
 class RecapitulatifScreen extends StatelessWidget {
   static const routeName = '/recapitulatif';
@@ -17,9 +19,20 @@ class RecapitulatifScreen extends StatelessWidget {
         title: const Text("Mon récapitulatif"),
       ),
       drawer: const AppDrawer(),
-      body: const CustomBackground(
-        ch: Center(
-          child: Text("recapitulatif screen"),
+      body: CustomBackground(
+        ch: FutureBuilder(
+          future: Provider.of<RecapProvider>(
+            context,
+            listen: false,
+          ).getProjectRecapData(),
+          builder: (ct, recapSnapshot) {
+            if (recapSnapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return const RecapCard();
+          },
         ),
       ),
     );

@@ -4,6 +4,9 @@ import 'package:provider/single_child_widget.dart';
 import '../providers/auth_provider.dart';
 import '../providers/reset_pwd_forgotten_provider.dart';
 import '../providers/account_provider.dart';
+import '../providers/phase_provider.dart';
+import '../providers/recap_provider.dart';
+import '../providers/project_provider.dart';
 
 class ProvidersService {
   static List<SingleChildWidget> providerList() {
@@ -15,6 +18,18 @@ class ProvidersService {
         update: (ct, auth, prevState) => AccountProvider(
           authToken: auth.token,
         ),
+      ),
+      ChangeNotifierProxyProvider<AuthProvider, PhaseProvider>(
+        create: (ctx) => PhaseProvider(),
+        update: (ct, auth, prevState) => PhaseProvider(authToken: auth.token),
+      ),
+      ChangeNotifierProxyProvider<AuthProvider, RecapProvider>(
+        create: (ctx) => RecapProvider(),
+        update: (ct, auth, prevState) => RecapProvider(authToken: auth.token),
+      ),
+      ChangeNotifierProxyProvider<AuthProvider, ProjectProvider>(
+        create: (ctx) => ProjectProvider(),
+        update: (ct, auth, prevState) => ProjectProvider(authToken: auth.token),
       ),
     ];
   }
