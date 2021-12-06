@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../providers/project_provider.dart';
 
 import '../components/custom_card.dart';
+import '../../services/error_service.dart';
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({Key? key}) : super(key: key);
@@ -11,7 +12,11 @@ class ProjectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final data = Provider.of<ProjectProvider>(context).projectData;
-  
+
+    if (data.isEmpty) {
+      return ErrorService.showError("Données indisponible");
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(5.0),
       itemCount: data.length,

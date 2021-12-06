@@ -5,6 +5,7 @@ import '../../../providers/account_provider.dart';
 import '../../../models/account.dart';
 
 import '../forms/account_information_form.dart';
+import '../../../services/error_service.dart';
 
 class AccountInformation extends StatefulWidget {
   const AccountInformation({Key? key}) : super(key: key);
@@ -24,6 +25,10 @@ class _AccountInformationState extends State<AccountInformation> {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
+
+          if (!accountSnapshot.hasData) {
+            return ErrorService.showError("Service indisponible");
           }
 
           Account accountData = Account(
