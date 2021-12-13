@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/account_provider.dart';
-import '../../../models/account.dart';
+import '../../../models/user.dart';
 import '../../../models/gender.dart';
 
 import '../../components/gender_select_input.dart';
@@ -13,7 +13,7 @@ import '../../../utils/snackbar.dart';
 import '../../../services/validator_service.dart';
 
 class AccountInformationForm extends StatefulWidget {
-  final Account accountData;
+  final User accountData;
   const AccountInformationForm({
     Key? key,
     required this.accountData,
@@ -31,7 +31,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
   final _yearOldController = TextEditingController();
 
   late Gender _selectedGender;
-  late Account _savedData;
+  late User _savedData;
 
   var _isValid = true;
   var _isInit = true;
@@ -46,7 +46,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
     super.didChangeDependencies();
   }
 
-  void _setDataField(Account data) {
+  void _setDataField(User data) {
     _surnameController.text = data.surname!;
     _firstnameController.text = data.firstname!;
     _emailController.text = data.email!;

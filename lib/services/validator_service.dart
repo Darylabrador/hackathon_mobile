@@ -29,7 +29,7 @@ class ValidatorService {
 
   static String? validateField(String? value) {
     if (value!.trim().isEmpty) {
-      return "Veuillez saisir votre mot de passe";
+      return "Veuillez saisir une valeur";
     }
     return null;
   }

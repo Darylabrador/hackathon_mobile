@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/account_provider.dart';
-import '../../../models/account.dart';
+import '../../../models/user.dart';
 
 import '../forms/account_information_form.dart';
 import '../../../services/error_service.dart';
@@ -31,7 +31,7 @@ class _AccountInformationState extends State<AccountInformation> {
             return ErrorService.showError("Service indisponible");
           }
 
-          Account accountData = Account(
+          User accountData = User(
             id: accountSnapshot.data!["id"],
             email: accountSnapshot.data!["email"],
             surname: accountSnapshot.data!["surname"],

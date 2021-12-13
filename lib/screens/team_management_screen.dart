@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../layout/custom_background.dart';
-
 import '../widgets/navigation/app_drawer.dart';
-import '../widgets/components/card_header.dart';
+import '../widgets/team/team_info_datatable.dart';
 
 class TeamManagementScreen extends StatelessWidget {
   static const routeName = '/team';
@@ -10,17 +9,13 @@ class TeamManagementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mon équipe"),
       ),
       drawer: const AppDrawer(),
       body: const CustomBackground(
-        ch: Center(
-          child: Text("team management screen"),
-        ),
+        ch:  TeamInfoDataTable(),
       ),
     );
   }
