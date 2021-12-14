@@ -13,6 +13,7 @@ class DashboardScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Mon dashboard"),
       ),

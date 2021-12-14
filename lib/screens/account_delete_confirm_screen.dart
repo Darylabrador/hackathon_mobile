@@ -32,7 +32,7 @@ class _AccountDeleteConfirmScreenState
       return;
     }
     _formKey.currentState!.save();
-    
+
     try {
       Map<String, dynamic> repData = await Provider.of<AccountProvider>(
         context,
@@ -55,6 +55,7 @@ class _AccountDeleteConfirmScreenState
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Suppression de compte"),
       ),
@@ -78,18 +79,18 @@ class _AccountDeleteConfirmScreenState
                   ),
                   const SizedBox(height: 40),
                   CustomTextFormField(
-                    labelText: "Mot de passe",
-                    controller: _passwordController,
-                    obscureText: true,
-                    validator: (value) => ValidatorService.validateField(value)
-                  ),
+                      labelText: "Mot de passe",
+                      controller: _passwordController,
+                      obscureText: true,
+                      validator: (value) =>
+                          ValidatorService.validateField(value)),
                   const SizedBox(height: 10),
                   CustomTextFormField(
-                    labelText: "Confirmation mot de passe",
-                    controller: _passwordConfirmController,
-                    obscureText: true,
-                    validator: (value) => ValidatorService.validateField(value)
-                  ),
+                      labelText: "Confirmation mot de passe",
+                      controller: _passwordConfirmController,
+                      obscureText: true,
+                      validator: (value) =>
+                          ValidatorService.validateField(value)),
                   const SizedBox(height: 20),
                   DoubleButtonForm(
                     cancelHanlder: () => Navigator.of(context).pop(),

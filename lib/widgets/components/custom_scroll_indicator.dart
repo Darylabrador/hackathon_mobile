@@ -3,7 +3,8 @@ import 'package:scroll_indicator/scroll_indicator.dart';
 
 class CustomScrollIndicator extends StatefulWidget {
   final ScrollController scrollController;
-  const CustomScrollIndicator({Key? key, required this.scrollController}) : super(key: key);
+  const CustomScrollIndicator({Key? key, required this.scrollController})
+      : super(key: key);
 
   @override
   _CustomScrollIndicatorState createState() => _CustomScrollIndicatorState();
@@ -11,9 +12,15 @@ class CustomScrollIndicator extends StatefulWidget {
 
 class _CustomScrollIndicatorState extends State<CustomScrollIndicator> {
   @override
+  void dispose() {
+    widget.scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    
+
     return Column(
       children: [
         const SizedBox(height: 30),

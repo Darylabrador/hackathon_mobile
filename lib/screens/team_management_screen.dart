@@ -10,12 +10,13 @@ class TeamManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Mon équipe"),
       ),
       drawer: const AppDrawer(),
       body: const CustomBackground(
-        ch:  TeamInfoDataTable(),
+        ch: TeamInfoDataTable(),
       ),
     );
   }

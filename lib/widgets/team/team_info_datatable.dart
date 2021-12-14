@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import './team_data.dart';
+import 'team_core_datatable.dart';
 import '../../providers/team_provider.dart';
 import '../../models/team_mates.dart' show TeamMates;
 
@@ -22,12 +21,6 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
   Iterable<TeamMates> savedIterableRows = [];
   final _searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   void didChangeDependencies() async {
@@ -116,8 +109,8 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
                   child: DataTable(
                     dividerThickness: 2.0,
                     columnSpacing: mediaQuery.size.width * 0.1,
-                    columns: TeamData.dataColum,
-                    rows: TeamData.rowData(iterableRows),
+                    columns: TeamCoreDataTable.dataColum,
+                    rows: TeamCoreDataTable.rowData(iterableRows),
                   ),
                 ),
               ),

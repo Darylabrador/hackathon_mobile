@@ -3,7 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import '../../models/team_mates.dart' show TeamMates;
 
-class TeamData {
+class TeamCoreDataTable {
   static List<DataColumn> dataColum = const [
     DataColumn(
       label: Text(
