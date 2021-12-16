@@ -12,12 +12,19 @@ import '../models/http_exception.dart';
 class AuthProvider with ChangeNotifier {
   String? _token;
   String? _identity;
+  String? _role;
   DateTime? _expiryDate;
   Timer? _authTimer;
 
   /// retrieve identity
   String? get identity {
     if (_identity != null) return _identity;
+    return "";
+  }
+
+  /// retrieve role
+  String? get role {
+    if (_role != null) return _role;
     return "";
   }
 
@@ -62,8 +69,9 @@ class AuthProvider with ChangeNotifier {
         if (responseData['success']) {
           _identity = responseData['identity'];
           _token = responseData['token'];
+          _role = responseData['role'];
           _expiryDate = JwtDecoder.getExpirationDate(responseData["token"]);
-          await _setSharedPreferences(_token, _expiryDate, _identity);
+          await _setSharedPreferences(_token, _expiryDate, _identity, _role);
           notifyListeners();
           _autoLogout();
         }
@@ -84,11 +92,13 @@ class AuthProvider with ChangeNotifier {
     String? token,
     DateTime? expiryDate,
     String? identity,
+    String? role,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     final userData = jsonEncode({
       "identity": identity,
       "token": token,
+      "role": role,
       "expiryDate": expiryDate!.toIso8601String(),
     });
     await prefs.setString("userData", userData);
@@ -106,6 +116,7 @@ class AuthProvider with ChangeNotifier {
 
       _expiryDate = expiryData;
       _token = extractData["token"] as String;
+      _role = extractData["role"] as String;
       _identity = extractData["identity"] as String;
 
       notifyListeners();

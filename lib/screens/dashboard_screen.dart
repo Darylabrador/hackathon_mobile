@@ -16,6 +16,16 @@ class DashboardScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Mon dashboard"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(
+                DashboardScreen.routeName,
+              );
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       drawer: const AppDrawer(),
       body: CustomBackgroundScroll(

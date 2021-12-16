@@ -13,6 +13,16 @@ class TeamManagementScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Mon équipe"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(
+                TeamManagementScreen.routeName,
+              );
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       drawer: const AppDrawer(),
       body: const CustomBackground(

@@ -3,12 +3,13 @@ import 'package:provider/provider.dart';
 
 import 'team_core_datatable.dart';
 import '../../providers/team_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../models/team_mates.dart' show TeamMates;
 import '../../models/role.dart';
 
 import '../components/datatable/search_bart.dart';
 import '../components/custom_scroll_indicator.dart';
-import '../../screens/team_management_screen.dart';
+
 
 class TeamInfoDataTable extends StatefulWidget {
   const TeamInfoDataTable({Key? key}) : super(key: key);
@@ -138,6 +139,7 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
                       context: context,
                       handleSelect: _handleSelect,
                       selectedRole: _selectedRole,
+                      currentUserRole: Provider.of<AuthProvider>(context).role
                     ),
                   ),
                 ),

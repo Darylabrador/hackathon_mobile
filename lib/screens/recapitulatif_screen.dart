@@ -16,6 +16,16 @@ class RecapitulatifScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Mon récapitulatif"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(
+                RecapitulatifScreen.routeName,
+              );
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       drawer: const AppDrawer(),
       body: CustomBackground(

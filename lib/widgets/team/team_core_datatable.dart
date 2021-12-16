@@ -48,12 +48,12 @@ class TeamCoreDataTable {
     ),
   ];
 
-  static List<DataRow> rowData({
-    required Iterable<TeamMates> iterableRows,
-    required BuildContext context,
-    required Function handleSelect,
-    required Role selectedRole,
-  }) {
+  static List<DataRow> rowData(
+      {required Iterable<TeamMates> iterableRows,
+      required BuildContext context,
+      required Function handleSelect,
+      required Role selectedRole,
+      required String? currentUserRole}) {
     List<DataRow> data = <DataRow>[];
     if (iterableRows.isEmpty) return data;
     for (var element in iterableRows) {
@@ -74,8 +74,8 @@ class TeamCoreDataTable {
                     ),
                   if (element.approuved == 1 &&
                       element.user.role != "coach" &&
-                      (element.user.role == "chef equipe" ||
-                          element.user.role == "porteur de projet"))
+                      (currentUserRole == "chef equipe" ||
+                          currentUserRole == "porteur de projet"))
                     TeamCoreActions.buildUpdateRole(
                       context: context,
                       mate: element,
