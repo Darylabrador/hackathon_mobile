@@ -26,6 +26,11 @@ class CustomTheme {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
+            headline5:  const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.redAccent,
+            ),
           ),
     );
   }

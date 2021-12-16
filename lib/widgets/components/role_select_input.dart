@@ -19,7 +19,10 @@ class RoleSelectInput extends StatefulWidget {
 }
 
 class _GenderSelectInputState extends State<RoleSelectInput> {
+  var _isInit = true;
+
   final List<Role> roleList = [
+    const Role(name: '0 - choisir un role'),
     const Role(name: 'chef de projet'),
     const Role(name: "gestion de projet"),
     const Role(name: 'porteur de projet'),
@@ -30,6 +33,15 @@ class _GenderSelectInputState extends State<RoleSelectInput> {
     const Role(name: "communication"),
     const Role(name: 'invite'),
   ];
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      roleList.sort((a, b) => a.name.toString().compareTo(b.name.toString()));
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +63,7 @@ class _GenderSelectInputState extends State<RoleSelectInput> {
       onSaved: (value) => widget.handleSelect(value),
       onChanged: (Role? newValue) {
         widget.handleSelect(newValue);
+        setState(() {});
       },
       items: roleList.map<DropdownMenuItem<Role>>((value) {
         return DropdownMenuItem<Role>(

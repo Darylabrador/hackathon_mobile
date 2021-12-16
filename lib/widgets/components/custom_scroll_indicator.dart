@@ -19,14 +19,12 @@ class _CustomScrollIndicatorState extends State<CustomScrollIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-
     return Column(
       children: [
         const SizedBox(height: 30),
         ScrollIndicator(
           scrollController: widget.scrollController,
-          width: mediaQuery.size.width * 0.3,
+          width: 150,
           height: 5,
           indicatorWidth: 20,
           decoration: BoxDecoration(

@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import 'team_core_datatable.dart';
 import '../../providers/team_provider.dart';
 import '../../models/team_mates.dart' show TeamMates;
+import '../../models/role.dart';
 
 import '../components/datatable/search_bart.dart';
 import '../components/custom_scroll_indicator.dart';
+import '../../screens/team_management_screen.dart';
 
 class TeamInfoDataTable extends StatefulWidget {
   const TeamInfoDataTable({Key? key}) : super(key: key);
@@ -21,10 +23,20 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
   Iterable<TeamMates> savedIterableRows = [];
   final _searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
+  Role _selectedRole = const Role(name: '0 - choisir un role');
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
+      iterableRows = [];
+      savedIterableRows = [];
+
       final initialData = await Provider.of<TeamProvider>(
         context,
         listen: false,
@@ -70,6 +82,17 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
     }
   }
 
+  void _handleSelect(Role selectedValued) {
+    Provider.of<TeamProvider>(
+      context,
+      listen: false,
+    ).setSelectedRole(selectedValued);
+
+    setState(() {
+      _selectedRole = selectedValued;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -110,7 +133,12 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
                     dividerThickness: 2.0,
                     columnSpacing: mediaQuery.size.width * 0.1,
                     columns: TeamCoreDataTable.dataColum,
-                    rows: TeamCoreDataTable.rowData(iterableRows),
+                    rows: TeamCoreDataTable.rowData(
+                      iterableRows: iterableRows,
+                      context: context,
+                      handleSelect: _handleSelect,
+                      selectedRole: _selectedRole,
+                    ),
                   ),
                 ),
               ),

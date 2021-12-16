@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../models/team_mates.dart' show TeamMates;
+import './team_core_actions.dart';
+import '../../models/team_mates.dart';
+import '../../models/role.dart';
 
 class TeamCoreDataTable {
   static List<DataColumn> dataColum = const [
@@ -47,8 +48,12 @@ class TeamCoreDataTable {
     ),
   ];
 
-
-  static List<DataRow> rowData(Iterable<TeamMates> iterableRows) {
+  static List<DataRow> rowData({
+    required Iterable<TeamMates> iterableRows,
+    required BuildContext context,
+    required Function handleSelect,
+    required Role selectedRole,
+  }) {
     List<DataRow> data = <DataRow>[];
     if (iterableRows.isEmpty) return data;
     for (var element in iterableRows) {
@@ -63,30 +68,24 @@ class TeamCoreDataTable {
               Row(
                 children: [
                   if (element.approuved == 0)
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      hoverColor: Colors.transparent,
-                      color: Colors.green,
-                      icon: const Icon(MdiIcons.checkCircle),
-                      onPressed: () {},
+                    TeamCoreActions.buildApproved(
+                      context: context,
+                      mate: element,
                     ),
                   if (element.approuved == 1 &&
-                      (element.user.role != "chef equipe" ||
-                          element.user.role != "coach"))
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      hoverColor: Colors.transparent,
-                      color: Colors.blueGrey[800],
-                      icon: const Icon(MdiIcons.pencil),
-                      onPressed: () {},
+                      element.user.role != "coach" &&
+                      (element.user.role == "chef equipe" ||
+                          element.user.role == "porteur de projet"))
+                    TeamCoreActions.buildUpdateRole(
+                      context: context,
+                      mate: element,
+                      handleSelect: handleSelect,
+                      selectedRole: selectedRole,
                     ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    hoverColor: Colors.transparent,
-                    color: Colors.redAccent,
-                    icon: const Icon(MdiIcons.trashCan),
-                    onPressed: () {},
-                  ),
+                  TeamCoreActions.buildDelete(
+                    context: context,
+                    mate: element,
+                  )
                 ],
               ),
             ),
