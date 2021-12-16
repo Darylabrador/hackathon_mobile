@@ -37,12 +37,13 @@ class PhaseProvider with ChangeNotifier {
       for (var element in dataArray) {
         phasesList.add(
           Phase(
-              id: element['id'],
-              current: element['current'],
-              name: element['name']),
+            id: element['id'],
+            current: element['current'],
+            name: element['name'],
+          ),
         );
       }
-
+      
       _phases = phasesList;
       notifyListeners();
     } catch (e) {

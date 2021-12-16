@@ -17,10 +17,16 @@ class ActResetForm extends StatefulWidget {
 
 class _ActResetFormState extends State<ActResetForm> {
   final _formKey = GlobalKey<FormState>();
-  final passwordController = TextEditingController();
-  final passwordConfirmController = TextEditingController();
+  final _codeController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _passwordConfirmController = TextEditingController();
+  var _loading = false;
 
   Future<void> _submitHandler(BuildContext context) async {
+    setState(() {
+      _loading = true;
+    });
+
     try {
       if (!_formKey.currentState!.validate()) {
         return;
@@ -31,8 +37,9 @@ class _ActResetFormState extends State<ActResetForm> {
         context,
         listen: false,
       ).updateForgottenPassword(
-        password: passwordController.text.trim(),
-        passwordConfirm: passwordConfirmController.text.trim(),
+        code: _codeController.text.trim(),
+        password: _passwordController.text.trim(),
+        passwordConfirm: _passwordConfirmController.text.trim(),
       );
 
       Snackbar.showScaffold(result["message"], result["success"], context);
@@ -40,26 +47,46 @@ class _ActResetFormState extends State<ActResetForm> {
       if (result["success"]) {
         Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       }
-
-      _formKey.currentState!.reset();
     } catch (e) {
       Snackbar.showScaffold(e.toString(), false, context);
     }
+
+    setState(() {
+      _loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Form(
       key: _formKey,
       child: Column(
         children: [
           TextFormField(
             autocorrect: false,
-            controller: passwordController,
+            controller: _codeController,
+            decoration: const InputDecoration(
+              labelText: "Code de validation",
+            ),
+            textInputAction: TextInputAction.done,
+            validator: (value) {
+              return ValidatorService.validateField(value);
+            },
+          ),
+          const SizedBox(height: 5),
+          TextFormField(
+            autocorrect: false,
+            controller: _passwordController,
             decoration: const InputDecoration(
               labelText: "Nouveau mot de passe",
             ),
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.done,
             obscureText: true,
             validator: (value) {
               return ValidatorService.validatePassword(value);
@@ -68,7 +95,7 @@ class _ActResetFormState extends State<ActResetForm> {
           const SizedBox(height: 5),
           TextFormField(
             autocorrect: false,
-            controller: passwordConfirmController,
+            controller: _passwordConfirmController,
             decoration: const InputDecoration(
               labelText: "Confirmation du mot de passe",
             ),

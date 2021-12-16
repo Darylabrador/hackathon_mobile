@@ -14,13 +14,6 @@ class ResetPwdForgottenProvider with ChangeNotifier {
     return _isResettingAsk;
   }
 
-  String? get resetToken {
-    if (_resetToken!.isEmpty) {
-      return null;
-    }
-    return _resetToken;
-  }
-
   void handleSwitchResetForm() {
     _isResettingAsk = !_isResettingAsk;
     notifyListeners();
@@ -41,7 +34,6 @@ class ResetPwdForgottenProvider with ChangeNotifier {
       );
       final responseData = jsonDecode(response.body);
       if (responseData["success"]) {
-        _resetToken = responseData["resetToken"];
         handleSwitchResetForm();
         notifyListeners();
       }
@@ -52,6 +44,7 @@ class ResetPwdForgottenProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> updateForgottenPassword({
+    required String code,
     required String password,
     required String passwordConfirm,
   }) async {
@@ -62,13 +55,12 @@ class ResetPwdForgottenProvider with ChangeNotifier {
         body: jsonEncode({
           "newPassword": password,
           "newPasswordConfirm": passwordConfirm,
-          "resetToken": _resetToken,
+          "resetToken": code,
         }),
         headers: {"Content-Type": "application/json"},
       );
       final responseData = jsonDecode(response.body);
       if (responseData["success"]) {
-        _resetToken = null;
         _isResettingAsk = true;
         notifyListeners();
       }
