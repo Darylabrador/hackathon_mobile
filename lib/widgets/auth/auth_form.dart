@@ -19,8 +19,12 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  var _loading = false;
 
   Future<void> _submitHandler(BuildContext context) async {
+    setState(() {
+      _loading = true;
+    });
     try {
       if (!_formKey.currentState!.validate()) {
         return;
@@ -44,6 +48,36 @@ class _AuthFormState extends State<AuthForm> {
     } catch (e) {
       Snackbar.showScaffold(e.toString(), false, context);
     }
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  Widget buildButtonorLoader(BuildContext context) {
+    if (_loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return Column(
+      children: [
+        SizedBox(
+          width: 200,
+          child: ElevatedButton(
+            child: const Text("Se connecter"),
+            onPressed: () => _submitHandler(context),
+          ),
+        ),
+        const SizedBox(height: 5),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(ForgottenPwdScreen.routeName);
+          },
+          child: const Text("Mot de passe oublié ?"),
+        ),
+      ],
+    );
   }
 
   @override
@@ -74,20 +108,7 @@ class _AuthFormState extends State<AuthForm> {
             },
           ),
           const SizedBox(height: 40),
-          SizedBox(
-            width: 200,
-            child: ElevatedButton(
-              child: const Text("Se connecter"),
-              onPressed: () => _submitHandler(context),
-            ),
-          ),
-          const SizedBox(height: 5),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(ForgottenPwdScreen.routeName);
-            },
-            child: const Text("Mot de passe oublié ?"),
-          ),
+          buildButtonorLoader(context)
         ],
       ),
     );

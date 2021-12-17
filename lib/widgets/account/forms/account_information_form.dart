@@ -33,6 +33,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
   late Gender _selectedGender;
   late User _savedData;
 
+  var _loading = false;
   var _isValid = true;
   var _isInit = true;
 
@@ -80,6 +81,10 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
   }
 
   Future<void> _submitHandler(BuildContext context) async {
+    setState(() {
+      _loading = true;
+    });
+
     if (_selectedGender is Gender) {
       setState(() {
         _isValid = true;
@@ -110,6 +115,25 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
     } catch (e) {
       Snackbar.showScaffold(e.toString(), false, context);
     }
+
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  Widget buildButtonorLoader(BuildContext context) {
+    if (_loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return DoubleButtonForm(
+      cancelHanlder: _resetForm,
+      cancelText: "Annuler",
+      validHandler: () => _submitHandler(context),
+      validText: "Valider",
+    );
   }
 
   @override
@@ -153,12 +177,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
               selectedGender: _selectedGender,
             ),
             const SizedBox(height: 20),
-            DoubleButtonForm(
-              cancelHanlder: _resetForm,
-              cancelText: "Annuler",
-              validHandler: () => _submitHandler(context),
-              validText: "Valider",
-            ),
+            buildButtonorLoader(context),
             const SizedBox(height: 20),
           ],
         ),

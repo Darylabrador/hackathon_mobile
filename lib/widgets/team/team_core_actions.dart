@@ -11,6 +11,72 @@ import '../../utils/snackbar.dart';
 import '../../screens/team_management_screen.dart';
 
 class TeamCoreActions {
+  static Widget buildButtonOrLoader({
+    required BuildContext context,
+    required Future<Map<String, dynamic>> actionFunction,
+    required Function loadingFunction,
+    required bool loading,
+    required bool isRole,
+    Function? handleSelect,
+  }) {
+    if (loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          child: const Text("Valider"),
+          onPressed: () async {
+            loadingFunction();
+            try {
+              var response = await actionFunction;
+
+              Snackbar.showScaffold(
+                response["message"],
+                response["success"],
+                context,
+              );
+            } catch (e) {
+              Snackbar.showScaffold(
+                e.toString(),
+                false,
+                context,
+              );
+            }
+
+            if (isRole) {
+              handleSelect!(
+                const Role(name: '0 - choisir un role'),
+              );
+            }
+
+            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed(
+              TeamManagementScreen.routeName,
+            );
+            loadingFunction();
+          },
+        ),
+        const SizedBox(width: 30),
+        ElevatedButton(
+          child: const Text("Annuler"),
+          onPressed: () {
+            if (isRole) {
+              handleSelect!(
+                const Role(name: '0 - choisir un role'),
+              );
+            }
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+
   static Widget buildApproved({
     required BuildContext context,
     required TeamMates mate,
@@ -25,64 +91,40 @@ class TeamCoreActions {
           isDismissible: false,
           context: context,
           builder: (BuildContext ctx) {
-            return SizedBox(
-              height: 200,
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Text(
-                    'Approuver un membre',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 30),
-                  const Text(
-                    "Acceptez-vous que ce membre rejoigne votre équipe ?",
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        child: const Text("Oui"),
-                        onPressed: () async {
-                          try {
-                            var response = await Provider.of<TeamProvider>(
-                              context,
-                              listen: false,
-                            ).putApprouved(mate.id);
+            var _loading = false;
 
-                            Snackbar.showScaffold(
-                              response["message"],
-                              response["success"],
-                              context,
-                            );
-                          } catch (e) {
-                            Snackbar.showScaffold(
-                              e.toString(),
-                              false,
-                              context,
-                            );
-                          }
-
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushReplacementNamed(
-                            TeamManagementScreen.routeName,
-                          );
-                        },
+            return StatefulBuilder(builder: (BuildContext context, setState) {
+              return SizedBox(
+                height: 200,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Text(
+                      'Approuver un membre',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 30),
+                    const Text(
+                      "Acceptez-vous que ce membre rejoigne votre équipe ?",
+                    ),
+                    const SizedBox(height: 30),
+                    buildButtonOrLoader(
+                      context: context,
+                      loading: _loading,
+                      isRole: false,
+                      actionFunction: Provider.of<TeamProvider>(
+                        context,
+                        listen: false,
+                      ).putApprouved(mate.id),
+                      loadingFunction: () => setState(
+                        () => {_loading = !_loading},
                       ),
-                      const SizedBox(width: 30),
-                      ElevatedButton(
-                        child: const Text("Non"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            );
+                    ),
+                  ],
+                ),
+              );
+            });
           },
         );
       },
@@ -212,64 +254,39 @@ class TeamCoreActions {
           isDismissible: false,
           context: context,
           builder: (BuildContext ctx) {
-            return SizedBox(
-              height: 200,
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Text(
-                    'Supprimer un équipier',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 30),
-                  const Text(
-                    "Voulez-vous vraiment supprimer cet équipier ?",
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        child: const Text("Valider"),
-                        onPressed: () async {
-                          try {
-                            var response = await Provider.of<TeamProvider>(
-                              context,
-                              listen: false,
-                            ).deleteUserInTeam(mate.id);
-
-                            Snackbar.showScaffold(
-                              response["message"],
-                              response["success"],
-                              context,
-                            );
-                          } catch (e) {
-                            Snackbar.showScaffold(
-                              e.toString(),
-                              false,
-                              context,
-                            );
-                          }
-
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushReplacementNamed(
-                            TeamManagementScreen.routeName,
-                          );
-                        },
+            var _loading = false;
+            return StatefulBuilder(builder: (BuildContext context, setState) {
+              return SizedBox(
+                height: 200,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Text(
+                      'Supprimer un équipier',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 30),
+                    const Text(
+                      "Voulez-vous vraiment supprimer cet équipier ?",
+                    ),
+                    const SizedBox(height: 30),
+                    buildButtonOrLoader(
+                      context: context,
+                      loading: _loading,
+                      isRole: false,
+                      actionFunction: Provider.of<TeamProvider>(
+                        context,
+                        listen: false,
+                      ).deleteUserInTeam(mate.id),
+                      loadingFunction: () => setState(
+                        () => {_loading = !_loading},
                       ),
-                      const SizedBox(width: 30),
-                      ElevatedButton(
-                        child: const Text("Annuler"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            );
+                    ),
+                  ],
+                ),
+              );
+            });
           },
         );
       },

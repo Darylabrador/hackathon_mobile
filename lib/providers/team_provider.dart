@@ -83,7 +83,7 @@ class TeamProvider with ChangeNotifier {
     try {
       if (_selectedRole == null ||
           _selectedRole!.name == "0 - choisir un role") {
-        return {'success': true, 'message': "Veuillez choisir un rôle"};
+        return {'success': false, 'message': "Veuillez choisir un rôle"};
       }
       final response = await http.put(
         url,

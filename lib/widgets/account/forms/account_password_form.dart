@@ -20,6 +20,8 @@ class _AccountPasswordFormState extends State<AccountPasswordForm> {
   final _oldPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
+
+  var _loading = false;
   var _isHiddenPassword = true;
 
   void _showPassword() {
@@ -36,7 +38,15 @@ class _AccountPasswordFormState extends State<AccountPasswordForm> {
   }
 
   Future<void> _submitHandler(BuildContext context) async {
+    setState(() {
+      _loading = true;
+    });
+
     if (!_formKey.currentState!.validate()) {
+      setState(() {
+        _loading = false;
+      });
+
       return;
     }
     _formKey.currentState!.save();
@@ -57,6 +67,24 @@ class _AccountPasswordFormState extends State<AccountPasswordForm> {
     } catch (e) {
       Snackbar.showScaffold(e.toString(), false, context);
     }
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  Widget buildButtonorLoader(BuildContext context) {
+    if (_loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return DoubleButtonForm(
+      cancelHanlder: _resetForm,
+      cancelText: "Annuler",
+      validHandler: () => _submitHandler(context),
+      validText: "Valider",
+    );
   }
 
   @override
@@ -100,12 +128,7 @@ class _AccountPasswordFormState extends State<AccountPasswordForm> {
               ),
             ),
             const SizedBox(height: 20),
-            DoubleButtonForm(
-              cancelHanlder: _resetForm,
-              cancelText: "Annuler",
-              validHandler: () => _submitHandler(context),
-              validText: "Valider",
-            ),
+            buildButtonorLoader(context),
             const SizedBox(height: 20),
           ],
         ),

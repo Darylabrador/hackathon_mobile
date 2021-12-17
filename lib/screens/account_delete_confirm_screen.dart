@@ -26,9 +26,16 @@ class _AccountDeleteConfirmScreenState
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
+  var _loading = false;
 
   Future<void> _submit(BuildContext context) async {
+    setState(() {
+      _loading = true;
+    });
     if (!_formKey.currentState!.validate()) {
+      setState(() {
+        _loading = false;
+      });
       return;
     }
     _formKey.currentState!.save();
@@ -49,6 +56,24 @@ class _AccountDeleteConfirmScreenState
     } catch (e) {
       Snackbar.showScaffold(e.toString(), false, context);
     }
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  Widget buildButtonorLoader(BuildContext context) {
+    if (_loading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return DoubleButtonForm(
+      cancelHanlder: () => Navigator.of(context).pop(),
+      cancelText: "Annuler",
+      validHandler: () => _submit(context),
+      validText: "Valider",
+    );
   }
 
   @override
@@ -92,12 +117,7 @@ class _AccountDeleteConfirmScreenState
                       validator: (value) =>
                           ValidatorService.validateField(value)),
                   const SizedBox(height: 20),
-                  DoubleButtonForm(
-                    cancelHanlder: () => Navigator.of(context).pop(),
-                    cancelText: "Annuler",
-                    validHandler: () => _submit(context),
-                    validText: "Valider",
-                  ),
+                  buildButtonorLoader(context),
                 ],
               ),
             ),
