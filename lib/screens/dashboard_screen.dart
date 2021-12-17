@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 import '../layout/custom_background_scroll.dart';
 
 import '../widgets/navigation/app_drawer.dart';
 import '../widgets/components/card_header.dart';
+import '../widgets/phases/hackathon/hackathon.dart';
+import '../widgets/phases/ideathon/ideathon.dart';
+
+import '../widgets/help/help_alert.dart';
 
 class DashboardScreen extends StatelessWidget {
   static const routeName = '/dashboard';
@@ -40,6 +46,10 @@ class DashboardScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => HelpAlert.showHelpAlert(context),
+        child: const Icon(MdiIcons.headset),
       ),
     );
   }
