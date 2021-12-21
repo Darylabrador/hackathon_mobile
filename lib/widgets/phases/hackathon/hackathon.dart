@@ -26,10 +26,10 @@ class _HackathonState extends State<Hackathon> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if(widget.showingPhase.fileName == Phase21.fileName) Phase21(),
-        if(widget.showingPhase.fileName == Phase22.fileName) Phase22(),
-        if(widget.showingPhase.fileName == Phase23.fileName) Phase23(),
-        if(widget.showingPhase.fileName == Phase24.fileName) Phase24(),
+        if(widget.showingPhase.fileName == Phase21.fileName) Phase21(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase22.fileName) Phase22(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase23.fileName) Phase23(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase24.fileName) Phase24(showingPhase: widget.showingPhase),
       ],
     );
   }

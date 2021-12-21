@@ -1,15 +1,53 @@
 import 'package:flutter/material.dart';
-import '../../components/custom_button_next_phase.dart';
+import 'package:provider/provider.dart';
 
-class Phase13 extends StatelessWidget {
+import '../../components/custom_button_next_phase.dart';
+import '../../../providers/phase_provider.dart';
+import '../../../models/phase.dart';
+
+class Phase13 extends StatefulWidget {
   static const fileName = "phase1_3";
-  const Phase13({Key? key}) : super(key: key);
+  final Phase showingPhase;
+
+  const Phase13({
+    Key? key,
+    required this.showingPhase,
+  }) : super(key: key);
+
+  @override
+  State<Phase13> createState() => _Phase13State();
+}
+
+class _Phase13State extends State<Phase13> {
+  var _isInit = true;
+  var _data = {};
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      _data = {
+        "phaseId": widget.showingPhase.id,
+        "phase": widget.showingPhase.name,
+        "data": []
+      };
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        CustomButtonNextPhase(),
+      children: [
+        CustomButtonNextPhase(
+          isRecruitement: true,
+          data: _data,
+          completeMessage: "Bravo ! Vous avez complété votre idée." ,
+          completeFunction: Provider.of<PhaseProvider>(
+            context,
+            listen: false,
+          ).postPhaseData,
+        )
       ],
     );
   }

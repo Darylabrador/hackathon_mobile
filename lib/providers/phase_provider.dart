@@ -93,4 +93,24 @@ class PhaseProvider with ChangeNotifier {
       throw HttpException("Veuillez ressayer ultérieurement");
     }
   }
+
+  Future<Map<String, dynamic>> postPhaseData(
+    Map<dynamic, dynamic> data,
+  ) async {
+    final url = Uri.parse("${ConstantVariables.startingURL}/projects/data");
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode(data),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $authToken",
+        },
+      );
+      final responseData = jsonDecode(response.body);
+      return responseData;
+    } catch (e) {
+      throw HttpException("Veuillez ressayer ultérieurement");
+    }
+  }
 }

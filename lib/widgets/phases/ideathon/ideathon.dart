@@ -28,12 +28,12 @@ class _IdeathonState extends State<Ideathon> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if(widget.showingPhase.fileName == Phase11.fileName) Phase11(),
-        if(widget.showingPhase.fileName == Phase12.fileName) Phase12(),
-        if(widget.showingPhase.fileName == Phase13.fileName) Phase13(),
-        if(widget.showingPhase.fileName == Phase14.fileName) Phase14(),
-        if(widget.showingPhase.fileName == Phase15.fileName) Phase15(),
-        if(widget.showingPhase.fileName == Phase16.fileName) Phase16(),
+        if(widget.showingPhase.fileName == Phase11.fileName) Phase11(showingPhase: widget.showingPhase,),
+        if(widget.showingPhase.fileName == Phase12.fileName) Phase12(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase13.fileName) Phase13(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase14.fileName) Phase14(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase15.fileName) Phase15(showingPhase: widget.showingPhase),
+        if(widget.showingPhase.fileName == Phase16.fileName) Phase16(showingPhase: widget.showingPhase),
       ],
     );
   }
