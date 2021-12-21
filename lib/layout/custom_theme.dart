@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/palette.dart';
+import '../helpers/custom_route_transition.dart';
 
 class CustomTheme {
   static ThemeData appTheme() {
@@ -26,12 +27,18 @@ class CustomTheme {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
-            headline5:  const TextStyle(
+            headline5: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.redAccent,
             ),
           ),
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CustomRouteTransition(),
+          TargetPlatform.iOS: CustomRouteTransition(),
+        },
+      ),
     );
   }
 }
