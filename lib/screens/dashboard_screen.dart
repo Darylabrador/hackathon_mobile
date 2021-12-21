@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../layout/custom_background_scroll.dart';
+import '../layout/custom_background.dart';
 
 import '../widgets/navigation/app_drawer.dart';
-import '../widgets/components/card_header.dart';
-import '../widgets/phases/hackathon/hackathon.dart';
-import '../widgets/phases/ideathon/ideathon.dart';
-
+import '../widgets/phases/displayed_phase.dart';
 import '../widgets/help/help_alert.dart';
+import '../providers/phase_provider.dart';
 
 class DashboardScreen extends StatelessWidget {
   static const routeName = '/dashboard';
@@ -16,8 +15,6 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -34,22 +31,37 @@ class DashboardScreen extends StatelessWidget {
         ],
       ),
       drawer: const AppDrawer(),
-      body: CustomBackgroundScroll(
-        ch: Center(
-          child: Column(
-            children: [
-              CardHeader.content(
-                context: context,
-                mediaQuery: mediaQuery,
-                topSpace: SizedBox(height: mediaQuery.size.height * 0.08),
-              ),
-            ],
-          ),
+      body: CustomBackground(
+        ch: FutureBuilder(
+          future: Provider.of<PhaseProvider>(
+            context,
+            listen: false,
+          ).getInitData(),
+          builder: (ctx, phaseSnapshot) {
+            if (phaseSnapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            var dashboardData = Provider.of<PhaseProvider>(
+              context,
+            ).dashboardData;
+
+            var currentTeamPhase = dashboardData!['team']['phase_actuel'];
+
+            return DisplayedPhase(currentTeamPhase: currentTeamPhase);
+          },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => HelpAlert.showHelpAlert(context),
-        child: const Icon(MdiIcons.headset),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => HelpAlert.showHelpAlert(context),
+            child: const Icon(MdiIcons.headset),
+          ),
+        ],
       ),
     );
   }

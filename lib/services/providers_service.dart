@@ -9,6 +9,7 @@ import '../providers/recap_provider.dart';
 import '../providers/project_provider.dart';
 import '../providers/team_provider.dart';
 import '../providers/help_provider.dart';
+import '../providers/invitation_provider.dart';
 
 class ProvidersService {
   static List<SingleChildWidget> providerList() {
@@ -40,6 +41,10 @@ class ProvidersService {
       ChangeNotifierProxyProvider<AuthProvider, HelpProvider>(
         create: (ctx) => HelpProvider(),
         update: (ct, auth, prevState) => HelpProvider(authToken: auth.token),
+      ),
+      ChangeNotifierProxyProvider<AuthProvider, InvitationProvider>(
+        create: (ctx) => InvitationProvider(),
+        update: (ct, auth, prevState) => InvitationProvider(authToken: auth.token),
       ),
     ];
   }

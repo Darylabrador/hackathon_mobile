@@ -98,12 +98,6 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
-    if (_isInit) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -114,8 +108,9 @@ class _TeamInfoDataTableState extends State<TeamInfoDataTable> {
             searchAction: _searchAction,
             resetSearch: _resetSearch,
           ),
-          CustomScrollIndicator(scrollController: scrollController),
-          Card(
+          if (_isInit) const Center(child: CircularProgressIndicator()),
+          if (!_isInit) CustomScrollIndicator(scrollController: scrollController),
+          if (!_isInit) Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
               side: const BorderSide(
