@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/auth_provider.dart';
+import '../../providers/phase_provider.dart';
 import '../invitation/invitation_alert.dart';
+import '../../screens/dashboard_screen.dart';
+
+import 'package:page_transition/page_transition.dart';
 
 class CustomButtonNextPhase extends StatefulWidget {
   final bool isRecruitement;
@@ -43,7 +47,15 @@ class _CustomButtonNextPhaseState extends State<CustomButtonNextPhase> {
             if (widget.isRecruitement && isAuthorize(userRole!))
               const SizedBox(width: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: const DashboardScreen(),
+                  ),
+                );
+              },
               child: const Text('Suivant'),
             ),
           ],

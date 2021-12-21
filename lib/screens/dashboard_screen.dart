@@ -44,11 +44,10 @@ class DashboardScreen extends StatelessWidget {
               );
             }
 
-            var dashboardData = Provider.of<PhaseProvider>(
+            var currentTeamPhase = Provider.of<PhaseProvider>(
               context,
-            ).dashboardData;
+            ).currentTeamPhase;
 
-            var currentTeamPhase = dashboardData!['team']['phase_actuel'];
             return DisplayedPhase(currentTeamPhase: currentTeamPhase);
           },
         ),
