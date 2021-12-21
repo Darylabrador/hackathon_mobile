@@ -49,7 +49,6 @@ class DashboardScreen extends StatelessWidget {
             ).dashboardData;
 
             var currentTeamPhase = dashboardData!['team']['phase_actuel'];
-
             return DisplayedPhase(currentTeamPhase: currentTeamPhase);
           },
         ),
