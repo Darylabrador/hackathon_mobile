@@ -119,7 +119,7 @@ class _Phase24FormState extends State<Phase24Form> {
       PhaseRefresherScreen.refreshScreen(
         context,
         resp['message'] ??
-            "Bravo ! Vous avez défini votre Business Model. Rendez-vous à l'étape suivante !",
+            "Bravo ! Vous avez terminé la phase d'Hackathon. Vous êtes prêt à pitcher votre idée devant le jury pour tenter de remporter le premier prix.",
         resp['success'],
       );
     } catch (e) {

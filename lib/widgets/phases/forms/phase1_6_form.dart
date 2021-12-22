@@ -67,7 +67,7 @@ class _Phase16FormState extends State<Phase16Form> {
       PhaseRefresherScreen.refreshScreen(
         context,
         resp['message'] ??
-            "Bravo ! Vous avez défini la proposition de valeur de votre offre ou produit. Rendez-vous à l'étape suivante !",
+            "Bravo ! Vous avez terminé la phase d'Idéathon. Vous êtes prêt à pitcher votre idée devant le jury pour tenter de passer à l'étape suivante.",
         resp['success'],
       );
     } catch (e) {
