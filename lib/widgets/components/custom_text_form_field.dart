@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import '../../utils/palette.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  final String labelText;
+  final String? labelText;
   final TextEditingController controller;
   final bool? obscureText;
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
   final String? initialVal;
+  final String? hintText;
+  final int minLines;
+  final int maxLines;
 
   const CustomTextFormField({
     Key? key,
     this.initialVal,
-    required this.labelText,
-    required this.controller,
     this.obscureText,
-    required this.validator,
+    this.hintText,
+    this.labelText,
+    this.minLines = 1,
+    this.maxLines = 1,
+    this.validator,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -26,7 +32,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       initialValue: widget.initialVal,
+      minLines: widget.minLines,
+      maxLines: widget.maxLines,
       decoration: InputDecoration(
+        hintText: widget.hintText,
         isDense: true,
         labelText: widget.labelText,
         focusedErrorBorder: const OutlineInputBorder(
@@ -42,7 +51,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderSide: BorderSide(color: Palette.bluePostale, width: 1.0),
         ),
       ),
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       controller: widget.controller,
       obscureText: widget.obscureText ?? false,
       validator: widget.validator

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../components/custom_button_next_phase.dart';
-import '../../../providers/phase_provider.dart';
 import '../../../models/phase.dart';
+
+import '../../components/custom_card_simple.dart';
+import '../forms/phase2_2_form.dart';
 
 class Phase22 extends StatefulWidget {
   static const fileName = "phase2_2";
   final Phase showingPhase;
+  final List<dynamic>? projectData;
 
   const Phase22({
     Key? key,
     required this.showingPhase,
+    this.projectData,
   }) : super(key: key);
 
   @override
@@ -19,35 +20,26 @@ class Phase22 extends StatefulWidget {
 }
 
 class _Phase22State extends State<Phase22> {
-  var _isInit = true;
-  var _data = {};
-
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      _data = {
-        "phaseId": widget.showingPhase.id,
-        "phase": widget.showingPhase.name,
-        "data": []
-      };
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Column(
       children: [
-        CustomButtonNextPhase(
-          isRecruitement: true,
-          data: _data,
-          completeMessage: "Bravo ! Vous avez complété l'étape 'Technologies'. Rendez-vous à l'étape suivante !",
-          completeFunction: Provider.of<PhaseProvider>(
-            context,
-            listen: false,
-          ).postPhaseData,
-        )
+        const SizedBox(height: 50),
+        Text(
+          "Technologies",
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        const SizedBox(height: 50),
+        CustomCardSimple(
+          width: mediaQuery.size.width * 0.9,
+          cardWidget: Phase22Form(
+            showingPhase: widget.showingPhase,
+            projectData: widget.projectData,
+          ),
+        ),
+        const SizedBox(height: 50),
       ],
     );
   }

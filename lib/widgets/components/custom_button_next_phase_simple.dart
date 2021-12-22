@@ -7,14 +7,14 @@ import '../invitation/invitation_alert.dart';
 import '../../screens/dashboard_screen.dart';
 import '../../utils/snackbar.dart';
 
-class CustomButtonNextPhase extends StatefulWidget {
+class CustomButtonNextPhaseSimple extends StatefulWidget {
   final bool isRecruitement;
   final bool isComplete;
   final Function completeFunction;
   final String completeMessage;
   final Map<dynamic, dynamic> data;
 
-  const CustomButtonNextPhase({
+  const CustomButtonNextPhaseSimple({
     Key? key,
     this.isRecruitement = false,
     this.isComplete = false,
@@ -24,10 +24,10 @@ class CustomButtonNextPhase extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomButtonNextPhaseState createState() => _CustomButtonNextPhaseState();
+  _CustomButtonNextPhaseSimpleState createState() => _CustomButtonNextPhaseSimpleState();
 }
 
-class _CustomButtonNextPhaseState extends State<CustomButtonNextPhase> {
+class _CustomButtonNextPhaseSimpleState extends State<CustomButtonNextPhaseSimple> {
   bool isAuthorize(String userRole) {
     final roles = ['porteur de projet', 'chef de projet', 'chef equipe'];
     if (roles.contains(userRole)) {
@@ -66,7 +66,21 @@ class _CustomButtonNextPhaseState extends State<CustomButtonNextPhase> {
                           _loading = !_loading;
                         });
                         try {
-                          await widget.completeFunction();
+                          final resp = await widget.completeFunction(
+                            widget.data,
+                          );
+                          Snackbar.showScaffold(
+                            resp['message'] ?? widget.completeMessage,
+                            resp['success'],
+                            context,
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const DashboardScreen(),
+                            ),
+                          );
                         } catch (e) {
                           Snackbar.showScaffold(
                             e.toString(),

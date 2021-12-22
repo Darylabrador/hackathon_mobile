@@ -21,6 +21,7 @@ class _DisplayedPhaseState extends State<DisplayedPhase> {
   @override
   Widget build(BuildContext context) {
     var phases = Provider.of<PhaseProvider>(context).phaseList;
+    var projectData = Provider.of<PhaseProvider>(context).projectData;
     var currentPhase = phases!.firstWhere(
       (element) => element.id == widget.currentTeamPhase,
     );
@@ -31,10 +32,12 @@ class _DisplayedPhaseState extends State<DisplayedPhase> {
           Ideathon(
             currentTeamPhase: widget.currentTeamPhase,
             showingPhase: currentPhase,
+            projectData: projectData,
           ),
           Hackathon(
             currentTeamPhase: widget.currentTeamPhase,
             showingPhase: currentPhase,
+            projectData: projectData,
           ),
         ],
       ),

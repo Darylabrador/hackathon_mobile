@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../components/custom_button_next_phase.dart';
-import '../../../providers/phase_provider.dart';
 import '../../../models/phase.dart';
+
+import '../../components/custom_card_simple.dart';
+import '../forms/phase1_6_form.dart';
 
 class Phase16 extends StatefulWidget {
   static const fileName = "phase1_6";
   final Phase showingPhase;
+  final List<dynamic>? projectData;
 
   const Phase16({
     Key? key,
     required this.showingPhase,
+    this.projectData,
   }) : super(key: key);
 
   @override
@@ -19,35 +20,26 @@ class Phase16 extends StatefulWidget {
 }
 
 class _Phase16State extends State<Phase16> {
-  var _isInit = true;
-  var _data = {};
-
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      _data = {
-        "phaseId": widget.showingPhase.id,
-        "phase": widget.showingPhase.name,
-        "data": []
-      };
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Column(
       children: [
-        CustomButtonNextPhase(
-          isRecruitement: true,
-          data: _data,
-          completeMessage: "Bravo ! Vous avez défini la proposition de valeur de votre offre ou produit. Rendez-vous à l'étape suivante !",
-          completeFunction: Provider.of<PhaseProvider>(
-            context,
-            listen: false,
-          ).postPhaseData,
-        )
+        const SizedBox(height: 50),
+        Text(
+          "Votre proposition de valeur",
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        const SizedBox(height: 50),
+        CustomCardSimple(
+          width: mediaQuery.size.width * 0.9,
+          cardWidget: Phase16Form(
+            showingPhase: widget.showingPhase,
+            projectData: widget.projectData,
+          ),
+        ),
+        const SizedBox(height: 50),
       ],
     );
   }

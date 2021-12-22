@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../team/team_info_datatable.dart';
-import '../../components/custom_button_next_phase.dart';
+import '../../components/custom_button_next_phase_simple.dart';
 import '../../../providers/phase_provider.dart';
 
 import '../../../models/phase.dart';
@@ -10,10 +10,12 @@ import '../../../models/phase.dart';
 class Phase11 extends StatefulWidget {
   static const fileName = "phase1_1";
   final Phase showingPhase;
+  final List<dynamic>? projectData;
 
   const Phase11({
     Key? key,
     required this.showingPhase,
+    this.projectData,
   }) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class _Phase11State extends State<Phase11> {
     return Column(
       children: [
         const TeamInfoDataTable(),
-        CustomButtonNextPhase(
+        CustomButtonNextPhaseSimple(
           isRecruitement: true,
           data: _data,
           completeMessage:

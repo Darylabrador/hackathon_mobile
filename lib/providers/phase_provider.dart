@@ -13,6 +13,7 @@ class PhaseProvider with ChangeNotifier {
   List<Phase>? _phases;
   Map<String, dynamic>? _dashboardData;
   int _currentTeamPhase = 1;
+  List<dynamic>? _projectData;
 
   List<Phase>? get phaseList {
     if (_phases!.isEmpty) {
@@ -30,6 +31,10 @@ class PhaseProvider with ChangeNotifier {
 
   int get currentTeamPhase {
     return _currentTeamPhase;
+  }
+
+  List<dynamic>? get projectData {
+    return _projectData;
   }
 
   Future<void> getInitData() async {
@@ -88,6 +93,7 @@ class PhaseProvider with ChangeNotifier {
       final responseData = jsonDecode(response.body)['data'];
       _dashboardData = responseData;
       _currentTeamPhase = responseData!['team']['phase_actuel'];
+      _projectData = responseData['project']['project_data'];
       notifyListeners();
     } catch (e) {
       throw HttpException("Veuillez ressayer ultérieurement");
