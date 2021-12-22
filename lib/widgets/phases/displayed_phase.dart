@@ -41,6 +41,9 @@ class _DisplayedPhaseState extends State<DisplayedPhase> {
             showingPhase: currentPhase,
             projectData: widget.projectData,
           ),
+          const SizedBox(height: 30),
+          const Text("Action financée et menée en partenariat avec la CDPPT", style: TextStyle(fontSize: 12),),
+          const Text("(Commission de Présence Postale et Territoriale à La Réunion)", style: TextStyle(fontSize: 12),),
         ],
       ),
     );

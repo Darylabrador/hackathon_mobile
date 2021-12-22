@@ -31,7 +31,18 @@ class _Phase14State extends State<Phase14> {
           "Votre différence",
           style: Theme.of(context).textTheme.headline1,
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 40),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            "Attention lorsque vous avez validé la phase, vous ne pouvez plus faire marche arrière !",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
         CustomCardSimple(
           width: mediaQuery.size.width * 0.9,
           cardWidget: Phase14Form(
