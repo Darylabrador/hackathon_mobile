@@ -6,6 +6,8 @@ import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
 
 import '../../components/custom_text_form_field.dart';
+import '../../../services/validator_service.dart';
+
 import '../../../utils/snackbar.dart';
 import '../../../models/phase.dart';
 import '../forms/phase_refresher_screen.dart';
@@ -103,6 +105,7 @@ class _Phase16FormState extends State<Phase16Form> {
             hintText:
                 "Qu’apportez-vous de mieux, que permettez-vous à vos utilisateurs ?",
             controller: _contenuController,
+            validator: (value) => ValidatorService.validateField(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(
