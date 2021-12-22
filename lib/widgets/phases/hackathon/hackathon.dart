@@ -14,9 +14,9 @@ class Hackathon extends StatefulWidget {
 
   const Hackathon({
     Key? key,
+    this.projectData,
     required this.currentTeamPhase,
     required this.showingPhase,
-    this.projectData,
   }) : super(key: key);
 
   @override
@@ -29,13 +29,25 @@ class _HackathonState extends State<Hackathon> {
     return Column(
       children: [
         if (widget.showingPhase.fileName == Phase21.fileName)
-          Phase21(showingPhase: widget.showingPhase),
+          Phase21(
+            showingPhase: widget.showingPhase,
+            projectData: widget.projectData,
+          ),
         if (widget.showingPhase.fileName == Phase22.fileName)
-          Phase22(showingPhase: widget.showingPhase),
+          Phase22(
+            showingPhase: widget.showingPhase,
+            projectData: widget.projectData,
+          ),
         if (widget.showingPhase.fileName == Phase23.fileName)
-          Phase23(showingPhase: widget.showingPhase),
+          Phase23(
+            showingPhase: widget.showingPhase,
+            projectData: widget.projectData,
+          ),
         if (widget.showingPhase.fileName == Phase24.fileName)
-          Phase24(showingPhase: widget.showingPhase),
+          Phase24(
+            showingPhase: widget.showingPhase,
+            projectData: widget.projectData,
+          ),
       ],
     );
   }

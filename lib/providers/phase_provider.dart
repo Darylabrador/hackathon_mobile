@@ -93,7 +93,8 @@ class PhaseProvider with ChangeNotifier {
       final responseData = jsonDecode(response.body)['data'];
       _dashboardData = responseData;
       _currentTeamPhase = responseData!['team']['phase_actuel'];
-      _projectData = responseData['project']['project_data'];
+      _projectData = responseData!['project']['project_data'];
+
       notifyListeners();
     } catch (e) {
       throw HttpException("Veuillez ressayer ultérieurement");

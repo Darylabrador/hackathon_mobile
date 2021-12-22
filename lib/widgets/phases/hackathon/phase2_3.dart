@@ -11,8 +11,8 @@ class Phase23 extends StatefulWidget {
 
   const Phase23({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override

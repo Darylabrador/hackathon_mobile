@@ -11,8 +11,8 @@ class Phase15 extends StatefulWidget {
 
   const Phase15({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override

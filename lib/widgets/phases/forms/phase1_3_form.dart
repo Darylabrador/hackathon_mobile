@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
 
 import '../../components/custom_text_form_field.dart';
-import '../../../services/validator_service.dart';
 import '../../../utils/snackbar.dart';
 import '../../../models/phase.dart';
 import '../forms/phase_refresher_screen.dart';
@@ -13,10 +13,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase13Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase13Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -37,19 +38,31 @@ class _Phase13FormState extends State<Phase13Form> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "comment": "",
-            "pour_qui": "",
-            "pourquoi_maintenant": "",
-            "qui_etes_vous": "",
-            "pourquoi": "",
+            "comment": saved == null ? "" : saved["comment"],
+            "pour_qui": saved == null ? "" : saved["pour_qui"],
+            "pourquoi_maintenant":
+                saved == null ? "" : saved["pourquoi_maintenant"],
+            "qui_etes_vous": saved == null ? "" : saved["qui_etes_vous"],
+            "pourquoi": saved == null ? "" : saved["pourquoi"],
           }
         ]
       };
+
+      _commentController.text = saved == null ? "" : saved["comment"];
+      _pourQuiController.text = saved == null ? "" : saved["pour_qui"];
+      _pourquoiMaintenantController.text =
+          saved == null ? "" : saved["pourquoi_maintenant"];
+      _quiEtesVousController.text = saved == null ? "" : saved["qui_etes_vous"];
+      _pourquoiController.text = saved == null ? "" : saved["pourquoi"];
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -63,7 +76,8 @@ class _Phase13FormState extends State<Phase13Form> {
       _formKey.currentState!.save();
       _data["data"][0]["comment"] = _commentController.text.trim();
       _data["data"][0]["pour_qui"] = _pourQuiController.text.trim();
-      _data["data"][0]["pourquoi_maintenant"] = _pourquoiMaintenantController.text.trim();
+      _data["data"][0]["pourquoi_maintenant"] =
+          _pourquoiMaintenantController.text.trim();
       _data["data"][0]["qui_etes_vous"] = _quiEtesVousController.text.trim();
       _data["data"][0]["pourquoi"] = _pourquoiController.text.trim();
 
@@ -90,7 +104,8 @@ class _Phase13FormState extends State<Phase13Form> {
           CustomTextFormField(
             minLines: 5,
             maxLines: 10,
-            hintText: "Quelles compétences, moyens ou partenaires entrent dans la création et le développement de votre projet ?",
+            hintText:
+                "Quelles compétences, moyens ou partenaires entrent dans la création et le développement de votre projet ?",
             controller: _commentController,
           ),
           const SizedBox(height: 30),
@@ -104,21 +119,24 @@ class _Phase13FormState extends State<Phase13Form> {
           CustomTextFormField(
             minLines: 5,
             maxLines: 10,
-            hintText: "Et rajoutez également pourquoi il faut le faire maintenant, quelle urgence, quel impératif ou opportunité",
+            hintText:
+                "Et rajoutez également pourquoi il faut le faire maintenant, quelle urgence, quel impératif ou opportunité",
             controller: _pourquoiMaintenantController,
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
             minLines: 5,
             maxLines: 10,
-            hintText: "Quel est votre parcours, vos compétences, ce que vous aimez faire et ce en quoi vous êtes reconnu(e)",
+            hintText:
+                "Quel est votre parcours, vos compétences, ce que vous aimez faire et ce en quoi vous êtes reconnu(e)",
             controller: _quiEtesVousController,
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
             minLines: 5,
             maxLines: 10,
-            hintText: "Entreprendre est une aventure risquée, dites nous quelles sont vos motivations, cette envie, cette passion, ce besoin ou cette rage qui vous font avancer.",
+            hintText:
+                "Entreprendre est une aventure risquée, dites nous quelles sont vos motivations, cette envie, cette passion, ce besoin ou cette rage qui vous font avancer.",
             controller: _pourquoiController,
           ),
           const SizedBox(height: 30),

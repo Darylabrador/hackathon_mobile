@@ -8,8 +8,11 @@ import '../../providers/phase_provider.dart';
 
 class DisplayedPhase extends StatefulWidget {
   final int currentTeamPhase;
+  final List<dynamic>? projectData;
+
   const DisplayedPhase({
     Key? key,
+    this.projectData,
     required this.currentTeamPhase,
   }) : super(key: key);
 
@@ -21,7 +24,6 @@ class _DisplayedPhaseState extends State<DisplayedPhase> {
   @override
   Widget build(BuildContext context) {
     var phases = Provider.of<PhaseProvider>(context).phaseList;
-    var projectData = Provider.of<PhaseProvider>(context).projectData;
     var currentPhase = phases!.firstWhere(
       (element) => element.id == widget.currentTeamPhase,
     );
@@ -32,12 +34,12 @@ class _DisplayedPhaseState extends State<DisplayedPhase> {
           Ideathon(
             currentTeamPhase: widget.currentTeamPhase,
             showingPhase: currentPhase,
-            projectData: projectData,
+            projectData: widget.projectData,
           ),
           Hackathon(
             currentTeamPhase: widget.currentTeamPhase,
             showingPhase: currentPhase,
-            projectData: projectData,
+            projectData: widget.projectData,
           ),
         ],
       ),

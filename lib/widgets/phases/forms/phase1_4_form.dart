@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
@@ -12,10 +13,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase14Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase14Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -33,16 +35,23 @@ class _Phase14FormState extends State<Phase14Form> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "explication": "",
-            "chiffrage": "",
+            "explication": saved == null ? "" : saved["explication"],
+            "chiffrage": saved == null ? "" : saved["chiffrage"],
           }
         ]
       };
+
+      _explicationController.text = saved == null ? "" : saved["explication"];
+      _chiffrageController.text = saved == null ? "" : saved["chiffrage"];
     }
     _isInit = false;
     super.didChangeDependencies();

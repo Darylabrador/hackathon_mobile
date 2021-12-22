@@ -46,9 +46,18 @@ class DashboardScreen extends StatelessWidget {
 
             var currentTeamPhase = Provider.of<PhaseProvider>(
               context,
+              listen: false,
             ).currentTeamPhase;
 
-            return DisplayedPhase(currentTeamPhase: currentTeamPhase);
+            var projectData = Provider.of<PhaseProvider>(
+              context,
+              listen: false,
+            ).projectData;
+
+            return DisplayedPhase(
+              currentTeamPhase: currentTeamPhase,
+              projectData: projectData,
+            );
           },
         ),
       ),

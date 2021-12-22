@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
@@ -12,10 +13,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase21Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase21Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -35,18 +37,27 @@ class _Phase21FormState extends State<Phase21Form> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "marcher": "",
-            "partenaires": "",
-            "institutionnels": "",
-            "finances": "",
+            "marcher": saved == null ? "" : saved["marcher"],
+            "partenaires": saved == null ? "" : saved["partenaires"],
+            "institutionnels": saved == null ? "" : saved["institutionnels"],
+            "finances": saved == null ? "" : saved["finances"],
           }
         ]
       };
+
+      _marcherController.text = saved == null ? "" : saved["marcher"];
+      _partenairesController.text = saved == null ? "" : saved["partenaires"];
+      _institutionnelsController.text = saved == null ? "" : saved["institutionnels"];
+      _financesController.text = saved == null ? "" : saved["finances"];
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -60,7 +71,8 @@ class _Phase21FormState extends State<Phase21Form> {
       _formKey.currentState!.save();
       _data["data"][0]["marcher"] = _marcherController.text.trim();
       _data["data"][0]["partenaires"] = _partenairesController.text.trim();
-      _data["data"][0]["institutionnels"] = _institutionnelsController.text.trim();
+      _data["data"][0]["institutionnels"] =
+          _institutionnelsController.text.trim();
       _data["data"][0]["finances"] = _financesController.text.trim();
 
       final resp = await Provider.of<PhaseProvider>(

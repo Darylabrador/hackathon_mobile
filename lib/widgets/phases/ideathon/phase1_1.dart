@@ -10,12 +10,10 @@ import '../../../models/phase.dart';
 class Phase11 extends StatefulWidget {
   static const fileName = "phase1_1";
   final Phase showingPhase;
-  final List<dynamic>? projectData;
 
   const Phase11({
     Key? key,
     required this.showingPhase,
-    this.projectData,
   }) : super(key: key);
 
   @override

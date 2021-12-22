@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
 
 import '../../components/custom_text_form_field.dart';
-import '../../../services/validator_service.dart';
 import '../../../utils/snackbar.dart';
 import '../../../models/phase.dart';
 import '../forms/phase_refresher_screen.dart';
@@ -13,10 +13,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase15Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase15Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -36,18 +37,27 @@ class _Phase15FormState extends State<Phase15Form> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "pense": "",
-            "ressent": "",
-            "dit": "",
-            "fait": "",
+            "pense": saved == null ? "" : saved["pense"],
+            "ressent": saved == null ? "" : saved["ressent"],
+            "dit": saved == null ? "" : saved["dit"],
+            "fait": saved == null ? "" : saved["fait"],
           }
         ]
       };
+
+      _penseController.text = saved == null ? "" : saved["pense"];
+      _ressentController.text = saved == null ? "" : saved["ressent"];
+      _ditController.text = saved == null ? "" : saved["dit"];
+      _faitController.text = saved == null ? "" : saved["fait"];
     }
     _isInit = false;
     super.didChangeDependencies();

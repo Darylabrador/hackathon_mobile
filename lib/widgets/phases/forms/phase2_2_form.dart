@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
@@ -12,10 +13,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase22Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase22Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -35,18 +37,27 @@ class _Phase22FormState extends State<Phase22Form> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "produire": "",
-            "communiquer": "",
-            "delivrer": "",
-            "manager": "",
+            "produire": saved == null ? "" : saved["produire"],
+            "communiquer": saved == null ? "" : saved["communiquer"],
+            "delivrer": saved == null ? "" : saved["delivrer"],
+            "manager": saved == null ? "" : saved["manager"],
           }
         ]
       };
+
+      _produireController.text = saved == null ? "" : saved["produire"];
+      _communiquerController.text = saved == null ? "" : saved["communiquer"];
+      _delivrerController.text = saved == null ? "" : saved["delivrer"];
+      _managerController.text = saved == null ? "" : saved["manager"];
     }
     _isInit = false;
     super.didChangeDependencies();

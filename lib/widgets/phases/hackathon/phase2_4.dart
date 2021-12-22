@@ -11,8 +11,8 @@ class Phase24 extends StatefulWidget {
 
   const Phase24({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -23,7 +23,6 @@ class _Phase24State extends State<Phase24> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-
     return Column(
       children: [
         const SizedBox(height: 50),

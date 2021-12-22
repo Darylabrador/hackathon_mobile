@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
@@ -12,10 +13,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase24Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase24Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -42,25 +44,48 @@ class _Phase24FormState extends State<Phase24Form> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "matieres": "",
-            "investissements": "",
-            "fournisseurs": "",
-            "salaires": "",
-            "cout_matieres": "",
-            "cout_investissements": "",
-            "cout_fournisseurs": "",
-            "cout_salaires": "",
-            "totalCouts": "",
-            "totalVentes": "",
-            "marge": "",
+            "matieres": saved == null ? "" : saved["matieres"],
+            "investissements": saved == null ? "" : saved["investissements"],
+            "fournisseurs": saved == null ? "" : saved["fournisseurs"],
+            "salaires": saved == null ? "" : saved["salaires"],
+            "cout_matieres": saved == null ? "" : saved["cout_matieres"],
+            "cout_investissements":
+                saved == null ? "" : saved["cout_investissements"],
+            "cout_fournisseurs":
+                saved == null ? "" : saved["cout_fournisseurs"],
+            "cout_salaires": saved == null ? "" : saved["cout_salaires"],
+            "totalCouts": saved == null ? "" : saved["totalCouts"],
+            "totalVentes": saved == null ? "" : saved["totalVentes"],
+            "marge": saved == null ? "" : saved["marge"],
           }
         ]
       };
+
+      _matieresController.text = saved == null ? "" : saved["matieres"];
+      _investissementsController.text =
+          saved == null ? "" : saved["investissements"];
+      _fournisseursController.text = saved == null ? "" : saved["fournisseurs"];
+      _salairesController.text = saved == null ? "" : saved["salaires"];
+      _coutMatieresController.text =
+          saved == null ? "" : saved["cout_matieres"];
+      _coutInvestissementsController.text =
+          saved == null ? "" : saved["cout_investissements"];
+      _coutFournisseursController.text =
+          saved == null ? "" : saved["cout_fournisseurs"];
+      _coutSalairesController.text =
+          saved == null ? "" : saved["cout_salaires"];
+      _totalCoutsController.text = saved == null ? "" : saved["totalCouts"];
+      _totalVentesController.text = saved == null ? "" : saved["totalVentes"];
+      _margeController.text = saved == null ? "" : saved["marge"];
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -73,12 +98,15 @@ class _Phase24FormState extends State<Phase24Form> {
       }
       _formKey.currentState!.save();
       _data["data"][0]["matieres"] = _matieresController.text.trim();
-      _data["data"][0]["investissements"] = _investissementsController.text.trim();
+      _data["data"][0]["investissements"] =
+          _investissementsController.text.trim();
       _data["data"][0]["fournisseurs"] = _fournisseursController.text.trim();
       _data["data"][0]["salaires"] = _salairesController.text.trim();
       _data["data"][0]["cout_matieres"] = _coutMatieresController.text.trim();
-      _data["data"][0]["cout_investissements"] = _coutInvestissementsController.text.trim();
-      _data["data"][0]["cout_fournisseurs"] = _coutFournisseursController.text.trim();
+      _data["data"][0]["cout_investissements"] =
+          _coutInvestissementsController.text.trim();
+      _data["data"][0]["cout_fournisseurs"] =
+          _coutFournisseursController.text.trim();
       _data["data"][0]["cout_salaires"] = _coutSalairesController.text.trim();
       _data["data"][0]["totalCouts"] = _totalCoutsController.text.trim();
       _data["data"][0]["totalVentes"] = _totalVentesController.text.trim();

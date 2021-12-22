@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../components/custom_button_next_phase.dart';
 import '../../../providers/phase_provider.dart';
@@ -13,10 +14,11 @@ import '../forms/phase_refresher_screen.dart';
 class Phase12Form extends StatefulWidget {
   final Phase showingPhase;
   final List<dynamic>? projectData;
+
   const Phase12Form({
     Key? key,
-    required this.showingPhase,
     this.projectData,
+    required this.showingPhase,
   }) : super(key: key);
 
   @override
@@ -31,17 +33,23 @@ class _Phase12FormState extends State<Phase12Form> {
   var _data = {};
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (_isInit) {
+      var saved = widget.projectData!.firstWhereOrNull(
+        (element) => element['phaseId'] == widget.showingPhase.id,
+      );
+
       _data = {
         "phaseId": widget.showingPhase.id,
         "phase": widget.showingPhase.name,
         "data": [
           {
-            "quoi": "",
+            "quoi": saved == null ? "" : saved["quoi"],
           }
         ]
       };
+
+      _quoiController.text = saved == null ? "" : saved["quoi"];
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -60,7 +68,8 @@ class _Phase12FormState extends State<Phase12Form> {
       ).postPhaseData(_data);
       PhaseRefresherScreen.refreshScreen(
         context,
-        resp['message'] ?? "Bravo ! Vous avez finalisé la présentation de votre idée pour l'Idéathon Alternatives au cash.",
+        resp['message'] ??
+            "Bravo ! Vous avez finalisé la présentation de votre idée pour l'Idéathon Alternatives au cash.",
         resp['success'],
       );
     } catch (e) {
