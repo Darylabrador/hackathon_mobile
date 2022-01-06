@@ -38,15 +38,18 @@ class ProjectProvider with ChangeNotifier {
         Project(name: "Pour qui ?", content: responseData["for_who"] ?? ""),
       );
       _projectData.add(
-        Project(name: "Pourquoi maintenant ?", content: responseData["why_now"] ?? ""),
+        Project(
+            name: "Pourquoi maintenant ?",
+            content: responseData["why_now"] ?? ""),
       );
       _projectData.add(
-        Project(name: "Qui êtes vous ?", content: responseData["who_are_you"] ?? ""),
+        Project(
+            name: "Qui êtes vous ?",
+            content: responseData["who_are_you"] ?? ""),
       );
       _projectData.add(
         Project(name: "Pourquoi ?", content: responseData["why"] ?? ""),
       );
-
       notifyListeners();
     } catch (e) {
       throw HttpException("Veuillez réessayer plus tard!");

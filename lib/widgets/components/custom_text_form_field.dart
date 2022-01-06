@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? hintText;
   final int minLines;
   final int maxLines;
+  final void Function(String?)? onChanged ;
 
   const CustomTextFormField({
     Key? key,
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
     this.minLines = 1,
     this.maxLines = 1,
     this.validator,
+    this.onChanged,
     required this.controller,
   }) : super(key: key);
 
@@ -54,7 +56,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       textInputAction: TextInputAction.done,
       controller: widget.controller,
       obscureText: widget.obscureText ?? false,
-      validator: widget.validator
+      validator: widget.validator,
+      onChanged: widget.onChanged ,
     );
   }
 }

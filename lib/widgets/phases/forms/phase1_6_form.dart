@@ -33,6 +33,8 @@ class _Phase16FormState extends State<Phase16Form> {
   var _isInit = true;
   var _data = {};
 
+  var _displayContenuLabel = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -49,6 +51,7 @@ class _Phase16FormState extends State<Phase16Form> {
       };
 
       _contenuController.text = saved == null ? "" : saved["contenu"];
+      onChangeContenuValue(saved == null ? null : saved["contenu"]);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -77,6 +80,18 @@ class _Phase16FormState extends State<Phase16Form> {
     }
   }
 
+  void onChangeContenuValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayContenuLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayContenuLabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -100,12 +115,14 @@ class _Phase16FormState extends State<Phase16Form> {
           ),
           const SizedBox(height: 50),
           CustomTextFormField(
+            labelText: _displayContenuLabel ? "Qu’apportez-vous de mieux, que permettez-vous à vos utilisateurs ?" : null,
             minLines: 5,
             maxLines: 15,
             hintText:
                 "Qu’apportez-vous de mieux, que permettez-vous à vos utilisateurs ?",
             controller: _contenuController,
             validator: (value) => ValidatorService.validateField(value),
+            onChanged: (value) => onChangeContenuValue(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(

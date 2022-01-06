@@ -41,6 +41,18 @@ class _Phase24FormState extends State<Phase24Form> {
   var _isInit = true;
   var _data = {};
 
+  var _displayMatieresLabel = false;
+  var _displayInvestissementsLabel = false;
+  var _displayFournisseursLabel = false;
+  var _displaySalairesLabel = false;
+  var _displayCoutMatieresLabel = false;
+  var _displayCoutInvestissementLabel = false;
+  var _displayCoutFournisseursLabel = false;
+  var _displayCoutSalairesLabel = false;
+  var _displayTotalCoutsLabel = false;
+  var _displayTotalVentesLabel = false;
+  var _displayMargeLabel = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -86,6 +98,21 @@ class _Phase24FormState extends State<Phase24Form> {
       _totalCoutsController.text = saved == null ? "" : saved["totalCouts"];
       _totalVentesController.text = saved == null ? "" : saved["totalVentes"];
       _margeController.text = saved == null ? "" : saved["marge"];
+
+      onChangeMatieresValue(saved == null ? null : saved["matieres"]);
+      onChangeInvestissementsValue(
+          saved == null ? null : saved["investissements"]);
+      onChangeFournisseursValue(saved == null ? null : saved["fournisseurs"]);
+      onChangeSalairesValue(saved == null ? null : saved["salaires"]);
+      onChangeCoutMatieresValue(saved == null ? null : saved["cout_matieres"]);
+      onChangeCoutInvestissementsValue(
+          saved == null ? null : saved["cout_investissements"]);
+      onChangeCoutFournisseursValue(
+          saved == null ? null : saved["cout_fournisseurs"]);
+      onChangeCoutSalairesValue(saved == null ? null : saved["cout_salaires"]);
+      onChangeTotalCoutsValue(saved == null ? null : saved["totalCouts"]);
+      onChangeTotalVentesValue(saved == null ? null : saved["totalVentes"]);
+      onChangeMargeValue(saved == null ? null : saved["marge"]);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -127,6 +154,138 @@ class _Phase24FormState extends State<Phase24Form> {
     }
   }
 
+  void onChangeMatieresValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayMatieresLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayMatieresLabel = true;
+      });
+    }
+  }
+
+  void onChangeInvestissementsValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayInvestissementsLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayInvestissementsLabel = true;
+      });
+    }
+  }
+
+  void onChangeFournisseursValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayFournisseursLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayFournisseursLabel = true;
+      });
+    }
+  }
+
+  void onChangeSalairesValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displaySalairesLabel = false;
+      });
+    } else {
+      setState(() {
+        _displaySalairesLabel = true;
+      });
+    }
+  }
+
+  void onChangeCoutMatieresValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayCoutMatieresLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayCoutMatieresLabel = true;
+      });
+    }
+  }
+
+  void onChangeCoutInvestissementsValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayCoutInvestissementLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayCoutInvestissementLabel = true;
+      });
+    }
+  }
+
+  void onChangeCoutFournisseursValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayCoutFournisseursLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayCoutFournisseursLabel = true;
+      });
+    }
+  }
+
+  void onChangeCoutSalairesValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayCoutSalairesLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayCoutSalairesLabel = true;
+      });
+    }
+  }
+
+  void onChangeTotalCoutsValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayTotalCoutsLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayTotalCoutsLabel = true;
+      });
+    }
+  }
+
+  void onChangeTotalVentesValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayTotalVentesLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayTotalVentesLabel = true;
+      });
+    }
+  }
+
+  void onChangeMargeValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayMargeLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayMargeLabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -142,80 +301,106 @@ class _Phase24FormState extends State<Phase24Form> {
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayTotalCoutsLabel ? "Total des coûts" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Total des coûts",
             controller: _totalCoutsController,
+            onChanged: (value) => onChangeTotalCoutsValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayTotalVentesLabel ? "Total des ventes" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Total des ventes",
             controller: _totalVentesController,
+            onChanged: (value) => onChangeTotalVentesValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayMargeLabel ? "Marge" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Marge",
             controller: _margeController,
+            onChanged: (value) => onChangeMargeValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText:
+                _displayCoutFournisseursLabel ? "Matières première" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Matières première",
             controller: _matieresController,
+            onChanged: (value) => onChangeMatieresValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText:
+                _displayCoutMatieresLabel ? "Matières première (coût)" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Matières première (coût)",
             controller: _coutMatieresController,
+            onChanged: (value) => onChangeCoutMatieresValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayInvestissementsLabel ? "Investissements" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Investissements",
             controller: _investissementsController,
+            onChanged: (value) => onChangeInvestissementsValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayCoutInvestissementLabel
+                ? "Investissements (coût)"
+                : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Investissements (coût)",
             controller: _coutInvestissementsController,
+            onChanged: (value) => onChangeCoutFournisseursValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayFournisseursLabel ? "Fournisseurs" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Fournisseurs",
             controller: _fournisseursController,
+            onChanged: (value) => onChangeCoutFournisseursValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayCoutFournisseursLabel ? "" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Fournisseurs (coût)",
             controller: _coutFournisseursController,
+            onChanged: (value) => onChangeCoutFournisseursValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displaySalairesLabel ? "Salaires" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Salaires",
             controller: _salairesController,
+            onChanged: (value) => onChangeCoutFournisseursValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayCoutSalairesLabel ? "Salaires (coût)" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Salaires (coût)",
             controller: _coutSalairesController,
+            onChanged: (value) => onChangeCoutFournisseursValue(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(

@@ -34,6 +34,11 @@ class _Phase21FormState extends State<Phase21Form> {
   var _isInit = true;
   var _data = {};
 
+  var _displayMarcherLabel = false;
+  var _displayPartenairesLabel = false;
+  var _displayInstitutionnelsLabel = false;
+  var _displayFinancesLabel = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -56,8 +61,15 @@ class _Phase21FormState extends State<Phase21Form> {
 
       _marcherController.text = saved == null ? "" : saved["marcher"];
       _partenairesController.text = saved == null ? "" : saved["partenaires"];
-      _institutionnelsController.text = saved == null ? "" : saved["institutionnels"];
+      _institutionnelsController.text =
+          saved == null ? "" : saved["institutionnels"];
       _financesController.text = saved == null ? "" : saved["finances"];
+
+      onChangeMarcherValue(saved == null ? null : saved["marcher"]);
+      onChangePartenairesValue(saved == null ? null : saved["partenaires"]);
+      onChangeInstitutionnelsValue(
+          saved == null ? null : saved["institutionnels"]);
+      onChangeFinancesValue(saved == null ? null : saved["finances"]);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -90,6 +102,54 @@ class _Phase21FormState extends State<Phase21Form> {
     }
   }
 
+  void onChangeMarcherValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayMarcherLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayMarcherLabel = true;
+      });
+    }
+  }
+
+  void onChangePartenairesValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayPartenairesLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayPartenairesLabel = true;
+      });
+    }
+  }
+
+  void onChangeInstitutionnelsValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayInstitutionnelsLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayInstitutionnelsLabel = true;
+      });
+    }
+  }
+
+  void onChangeFinancesValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayFinancesLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayFinancesLabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -105,34 +165,50 @@ class _Phase21FormState extends State<Phase21Form> {
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayMarcherLabel
+                ? "Qui achète, distribue, influence ou concurrence vos produits et services ?"
+                : null,
             minLines: 5,
             maxLines: 15,
             hintText:
                 "Qui achète, distribue, influence ou concurrence vos produits et services ?",
             controller: _marcherController,
+            onChanged: (value) => onChangeMarcherValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayPartenairesLabel
+                ? "Qui sont les acteurs clés (partenaire, sous-traitant..)"
+                : null,
             minLines: 5,
             maxLines: 15,
             hintText:
                 "Qui est votre partenaire, votre sous-traitant, qui sont les acteurs clés qui vous fournissent ?",
             controller: _partenairesController,
+            onChanged: (value) => onChangePartenairesValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayInstitutionnelsLabel
+                ? "Qui représente votre entreprise politiquement ou professionnellement ?"
+                : null,
             minLines: 5,
             maxLines: 15,
             hintText:
                 "Qui représente votre entreprise politiquement ou professionnellement ?",
             controller: _institutionnelsController,
+            onChanged: (value) => onChangeInstitutionnelsValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayFinancesLabel
+                ? "Qui finance, assure ou investit dans votre projet ?"
+                : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Qui finance, assure ou investit dans votre projet ?",
             controller: _financesController,
+            onChanged: (value) => onChangeFinancesValue(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(

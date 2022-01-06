@@ -32,6 +32,7 @@ class _Phase12FormState extends State<Phase12Form> {
 
   var _isInit = true;
   var _data = {};
+  var _displayedlabel = false;
 
   @override
   void didChangeDependencies() async {
@@ -50,7 +51,9 @@ class _Phase12FormState extends State<Phase12Form> {
         ]
       };
 
-      _quoiController.text = saved == null ? "" : saved["quoi"];
+      var dataText = saved == null ? "" : saved["quoi"];
+      _quoiController.text = dataText;
+      onChangeValue(dataText == "" ? null : dataText);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -78,6 +81,18 @@ class _Phase12FormState extends State<Phase12Form> {
     }
   }
 
+  void onChangeValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayedlabel = false;
+      });
+    } else {
+      setState(() {
+        _displayedlabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -85,12 +100,14 @@ class _Phase12FormState extends State<Phase12Form> {
       child: Column(
         children: [
           CustomTextFormField(
+            labelText: _displayedlabel ? 'Détaillez votre offre' : null,
             minLines: 5,
             maxLines: 50,
             hintText:
                 "Détaillez votre offre avec des mots simples et clairs, comme par exemple : « Ce mini-guide de questions vous permet de construire une présentation détaillée de votre projet. il est composé de 3 phases clés amenant à une présentation finale idéale pour convaincre.",
             controller: _quoiController,
             validator: (value) => ValidatorService.validateField(value),
+            onChanged: (value) => onChangeValue(value),
           ),
           CustomButtonNextPhase(
             data: _data,

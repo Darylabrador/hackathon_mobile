@@ -35,6 +35,12 @@ class _Phase13FormState extends State<Phase13Form> {
   var _isInit = true;
   var _data = {};
 
+  var _displayHowLabel = false;
+  var _displayForWhoLabel = false;
+  var _displayWhyNowLabel = false;
+  var _displayWhoAreYouLabel = false;
+  var _displayWhyLabel = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -59,10 +65,15 @@ class _Phase13FormState extends State<Phase13Form> {
 
       _commentController.text = saved == null ? "" : saved["comment"];
       _pourQuiController.text = saved == null ? "" : saved["pour_qui"];
-      _pourquoiMaintenantController.text =
-          saved == null ? "" : saved["pourquoi_maintenant"];
+      _pourquoiMaintenantController.text = saved == null ? "" : saved["pourquoi_maintenant"];
       _quiEtesVousController.text = saved == null ? "" : saved["qui_etes_vous"];
       _pourquoiController.text = saved == null ? "" : saved["pourquoi"];
+
+      onChangeHowValue(saved == null ? null : saved["comment"]);
+      onChangeForWhoValue(saved == null ? null : saved["pour_qui"]);
+      onChangeWhyNowValue(saved == null ? null : saved["pourquoi_maintenant"]);
+      onChangeWhoAreYouValue(saved == null ? null : saved["qui_etes_vous"]);
+      onChangeWhyValue(saved == null ? null : saved["pourquoi"]);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -95,6 +106,66 @@ class _Phase13FormState extends State<Phase13Form> {
     }
   }
 
+  void onChangeHowValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayHowLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayHowLabel = true;
+      });
+    }
+  }
+
+  void onChangeForWhoValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayForWhoLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayForWhoLabel = true;
+      });
+    }
+  }
+
+  void onChangeWhyNowValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayWhyNowLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayWhyNowLabel = true;
+      });
+    }
+  }
+
+  void onChangeWhoAreYouValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayWhoAreYouLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayWhoAreYouLabel = true;
+      });
+    }
+  }
+
+  void onChangeWhyValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayWhyLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayWhyLabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -102,42 +173,59 @@ class _Phase13FormState extends State<Phase13Form> {
       child: Column(
         children: [
           CustomTextFormField(
+            labelText: _displayHowLabel
+                ? "Vos compétences, moyens, partenaires"
+                : null,
             minLines: 5,
             maxLines: 10,
             hintText:
                 "Quelles compétences, moyens ou partenaires entrent dans la création et le développement de votre projet ?",
             controller: _commentController,
+            onChanged: (value) => onChangeHowValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayForWhoLabel ? "Qui est votre client ?" : null,
             minLines: 5,
             maxLines: 10,
             hintText: "Qui est votre client, où est il ?",
             controller: _pourQuiController,
+            onChanged: (value) => onChangeForWhoValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayWhyNowLabel
+                ? "Pourquoi il faut le faire maintenant ?"
+                : null,
             minLines: 5,
             maxLines: 10,
             hintText:
                 "Et rajoutez également pourquoi il faut le faire maintenant, quelle urgence, quel impératif ou opportunité",
             controller: _pourquoiMaintenantController,
+            onChanged: (value) => onChangeWhyNowValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayWhoAreYouLabel
+                ? "Votre parcours, vos compétences, ce que vous aimez faire"
+                : null,
             minLines: 5,
             maxLines: 10,
             hintText:
                 "Quel est votre parcours, vos compétences, ce que vous aimez faire et ce en quoi vous êtes reconnu(e)",
             controller: _quiEtesVousController,
+            onChanged: (value) => onChangeWhoAreYouValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText:
+                _displayWhyLabel ? "Quelles sont vos motivations ?" : null,
             minLines: 5,
             maxLines: 10,
             hintText:
                 "Entreprendre est une aventure risquée, dites nous quelles sont vos motivations, cette envie, cette passion, ce besoin ou cette rage qui vous font avancer.",
             controller: _pourquoiController,
+            onChanged: (value) => onChangeWhyValue(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(

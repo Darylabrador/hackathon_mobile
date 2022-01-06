@@ -34,6 +34,11 @@ class _Phase22FormState extends State<Phase22Form> {
   var _isInit = true;
   var _data = {};
 
+  var _displayProduireLabel = false;
+  var _displayCommuniquerLabel = false;
+  var _displayDelivrerLabel = false;
+  var _displayManagerLabel = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -58,6 +63,11 @@ class _Phase22FormState extends State<Phase22Form> {
       _communiquerController.text = saved == null ? "" : saved["communiquer"];
       _delivrerController.text = saved == null ? "" : saved["delivrer"];
       _managerController.text = saved == null ? "" : saved["manager"];
+
+      onChangeProduireValue(saved == null ? null : saved["produire"]);
+      onChangeCommuniquerValue(saved == null ? null : saved["communiquer"]);
+      onChangeDelivrerValue(saved == null ? null : saved["delivrer"]);
+      onChangeManagerValue(saved == null ? null : saved["manager"]);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -89,6 +99,54 @@ class _Phase22FormState extends State<Phase22Form> {
     }
   }
 
+  void onChangeProduireValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayProduireLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayProduireLabel = true;
+      });
+    }
+  }
+
+  void onChangeCommuniquerValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayCommuniquerLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayCommuniquerLabel = true;
+      });
+    }
+  }
+
+  void onChangeDelivrerValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayDelivrerLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayDelivrerLabel = true;
+      });
+    }
+  }
+
+  void onChangeManagerValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayManagerLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayManagerLabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -104,31 +162,39 @@ class _Phase22FormState extends State<Phase22Form> {
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayProduireLabel ? "Créer / Produire" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Créer / Produire",
             controller: _produireController,
+            onChanged: (value) => onChangeProduireValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayCommuniquerLabel ? "Vendre / Communiquer" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Vendre / Communiquer",
             controller: _communiquerController,
+            onChanged: (value) => onChangeCommuniquerValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayDelivrerLabel ? "Servir / Délivrer" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Servir / Délivrer",
             controller: _delivrerController,
+            onChanged: (value) => onChangeDelivrerValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayManagerLabel ? "Organiser / Manager" : null,
             minLines: 5,
             maxLines: 15,
             hintText: "Organiser / Manager",
             controller: _managerController,
+            onChanged: (value) => onChangeManagerValue(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(

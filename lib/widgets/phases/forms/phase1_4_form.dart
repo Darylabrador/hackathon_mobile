@@ -32,6 +32,9 @@ class _Phase14FormState extends State<Phase14Form> {
   var _isInit = true;
   var _data = {};
 
+  var _displayExplicationLabel = false;
+  var _displayChiffrageLabel = false;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -52,6 +55,8 @@ class _Phase14FormState extends State<Phase14Form> {
 
       _explicationController.text = saved == null ? "" : saved["explication"];
       _chiffrageController.text = saved == null ? "" : saved["chiffrage"];
+      onChangeExplicationValue(saved == null ? null : saved["explication"]);
+      onChangeChiffrageValue(saved == null ? null : saved["chiffrage"]);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -81,6 +86,30 @@ class _Phase14FormState extends State<Phase14Form> {
     }
   }
 
+  void onChangeExplicationValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayExplicationLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayExplicationLabel = true;
+      });
+    }
+  }
+
+  void onChangeChiffrageValue(String? value) {
+    if (value == null || value == "") {
+      setState(() {
+        _displayChiffrageLabel = false;
+      });
+    } else {
+      setState(() {
+        _displayChiffrageLabel = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -88,18 +117,26 @@ class _Phase14FormState extends State<Phase14Form> {
       child: Column(
         children: [
           CustomTextFormField(
+            labelText: _displayExplicationLabel
+                ? "Expliquer en quoi vos solutions amènent un mieux"
+                : null,
             minLines: 5,
             maxLines: 10,
             hintText:
                 "Pouvez-vous expliquer en quoi vos solutions amènent un mieux, une innovation ?",
             controller: _explicationController,
+            onChanged: (value) => onChangeExplicationValue(value),
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
+            labelText: _displayChiffrageLabel
+                ? "Pouvez-vous chiffrer votre avantage ?"
+                : null,
             minLines: 5,
             maxLines: 10,
             hintText: "Pouvez-vous chiffrer votre avantage ? Euro, minutes, %…",
             controller: _chiffrageController,
+            onChanged: (value) => onChangeChiffrageValue(value),
           ),
           const SizedBox(height: 30),
           CustomButtonNextPhase(
