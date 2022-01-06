@@ -27,7 +27,10 @@ class RecapCard extends StatelessWidget {
           CustomCard(
             width: mediaQuery.size.width * 0.9,
             title: data[index]["phase"],
-            cardWidget: RecapCardContent(phaseData: data[index]["data"]),
+            cardWidget: RecapCardContent(
+              phaseData: data[index]["data"],
+              width: mediaQuery.size.width,
+            ),
           ),
           const SizedBox(height: 10),
         ],

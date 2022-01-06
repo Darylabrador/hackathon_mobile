@@ -1,5 +1,4 @@
 class ConstantVariables {
-  static const startingURL =
-      "https://9d22-2a01-cb22-14e-e000-2d32-2678-eda0-bf81.ngrok.io/api";
+  static const startingURL = "https://c4c8-2a01-cb22-916-f700-95c5-bd84-67d8-cf24.ngrok.io/api";
   // static const startingURL = "https://api.hackathon.run";
 }

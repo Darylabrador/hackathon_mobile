@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class RecapCardContent extends StatelessWidget {
+  final double width;
   final List<dynamic> phaseData;
   const RecapCardContent({
     Key? key,
     required this.phaseData,
+    required this.width,
   }) : super(key: key);
 
   List<Widget> get cardContent {
@@ -31,7 +33,13 @@ class RecapCardContent extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 5),
-                      Text(value.toString()),
+                      SizedBox(
+                        width: width * 0.8,
+                        child: Text(
+                          value.toString(),
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
                       const SizedBox(height: 5),
                     ],
                   )
