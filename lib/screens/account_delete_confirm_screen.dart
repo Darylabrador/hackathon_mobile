@@ -50,7 +50,7 @@ class _AccountDeleteConfirmScreenState
       );
       Snackbar.showScaffold(repData['message'], repData["success"], context);
       if (repData['success']) {
-        Provider.of<AuthProvider>(context).logout();
+        Provider.of<AuthProvider>(context, listen: false).logout();
         Navigator.of(context).popAndPushNamed(LoginScreen.routeName);
       }
     } catch (e) {
