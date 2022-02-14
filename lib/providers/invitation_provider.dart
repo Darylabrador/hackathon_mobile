@@ -26,10 +26,15 @@ class InvitationProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _invitation = responseData['invitation'];
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultéreieurement");
+      throw HttpException(e.toString());
     }
   }
 
@@ -45,10 +50,15 @@ class InvitationProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _invitation = responseData['invitation'];
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultéreieurement");
+      throw HttpException(e.toString());
     }
   }
 }

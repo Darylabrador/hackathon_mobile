@@ -31,6 +31,11 @@ class TeamProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body)['data'];
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _teamMates = [];
       for (var data in responseData) {
         _teamMates.add(
@@ -50,7 +55,7 @@ class TeamProvider with ChangeNotifier {
       notifyListeners();
       return _teamMates;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement!");
+      throw HttpException(e.toString());
     }
   }
 
@@ -69,9 +74,14 @@ class TeamProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 
@@ -94,10 +104,15 @@ class TeamProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _selectedRole = null;
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 
@@ -113,9 +128,14 @@ class TeamProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 }

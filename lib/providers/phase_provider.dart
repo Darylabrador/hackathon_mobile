@@ -42,7 +42,7 @@ class PhaseProvider with ChangeNotifier {
       await getPhasesList();
       await getDashboardData();
     } catch (e) {
-      throw HttpException("Veuillez ressayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 
@@ -59,6 +59,11 @@ class PhaseProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       final dataArray = responseData["data"] as List<dynamic>;
 
       for (var element in dataArray) {
@@ -75,7 +80,7 @@ class PhaseProvider with ChangeNotifier {
       _phases = phasesList;
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez ressayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 
@@ -91,13 +96,18 @@ class PhaseProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body)['data'];
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _dashboardData = responseData;
       _currentTeamPhase = responseData!['team']['phase_actuel'];
       _projectData = responseData!['project']['project_data'];
 
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez ressayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 
@@ -115,9 +125,14 @@ class PhaseProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez ressayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 }

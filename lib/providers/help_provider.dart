@@ -27,7 +27,13 @@ class HelpProvider with ChangeNotifier {
           "Authorization": "Bearer $authToken",
         },
       );
+
       final responseData = jsonDecode(response.body)['data'];
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _helpDetails = HelpFrequency(
         id: responseData["id"],
         counter: responseData["counter"],
@@ -35,18 +41,21 @@ class HelpProvider with ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 
   Future<Map<String, dynamic>> postHelpFrequency(String subject) async {
     final url = Uri.parse("${ConstantVariables.startingURL}/notifications");
     try {
-      if(_helpDetails!.counter == _helpDetails!.limit) {
+      if (_helpDetails!.counter == _helpDetails!.limit) {
         return {"success": false, "message": "Vous avez dépassé votre quota."};
       }
       if (subject == "Sujet de la demande d'aide") {
-        return {"success": false, "message": "Veuillez choisir un sujet d'aide"};
+        return {
+          "success": false,
+          "message": "Veuillez choisir un sujet d'aide"
+        };
       }
       final response = await http.post(
         url,
@@ -57,9 +66,13 @@ class HelpProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement");
+      throw HttpException(e.toString());
     }
   }
 }

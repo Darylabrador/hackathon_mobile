@@ -65,6 +65,11 @@ class AuthProvider with ChangeNotifier {
         headers: {"Content-Type": "application/json"},
       );
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       if (autorizedRoles.contains(responseData["role"])) {
         if (responseData['success']) {
           _identity = responseData['identity'];
@@ -83,7 +88,7 @@ class AuthProvider with ChangeNotifier {
         return {'success': false, 'message': message};
       }
     } catch (e) {
-      throw HttpException("Veuillez rééssayez ultérieurement!");
+      throw HttpException(e.toString());
     }
   }
 
@@ -110,7 +115,8 @@ class AuthProvider with ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       if (!prefs.containsKey("userData")) return false;
 
-      final extractData = jsonDecode(prefs.getString("userData")!) as Map<String, dynamic>;
+      final extractData =
+          jsonDecode(prefs.getString("userData")!) as Map<String, dynamic>;
       final expiryData = DateTime.parse(extractData['expiryDate'] as String);
       if (expiryData.isBefore(DateTime.now())) return false;
 

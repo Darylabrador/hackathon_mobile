@@ -28,6 +28,11 @@ class ProjectProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body)['data'];
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
+
       _projectData.add(
         Project(name: "Quoi ?", content: responseData["what"] ?? ""),
       );
@@ -52,7 +57,7 @@ class ProjectProvider with ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez réessayer plus tard!");
+      throw HttpException(e.toString());
     }
   }
 }

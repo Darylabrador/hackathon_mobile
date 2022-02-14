@@ -33,13 +33,16 @@ class ResetPwdForgottenProvider with ChangeNotifier {
         headers: {"Content-Type": "application/json"},
       );
       final responseData = jsonDecode(response.body);
-      if (responseData["success"]) {
-        handleSwitchResetForm();
-        notifyListeners();
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
       }
+
+      handleSwitchResetForm();
+      notifyListeners();
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement !");
+      throw HttpException(e.toString());
     }
   }
 
@@ -60,13 +63,14 @@ class ResetPwdForgottenProvider with ChangeNotifier {
         headers: {"Content-Type": "application/json"},
       );
       final responseData = jsonDecode(response.body);
-      if (responseData["success"]) {
-        _isResettingAsk = true;
-        notifyListeners();
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
       }
+      _isResettingAsk = true;
+      notifyListeners();
       return responseData;
     } catch (e) {
-      throw HttpException("Veuillez réessayer ultérieurement !");
+      throw HttpException(e.toString());
     }
   }
 }

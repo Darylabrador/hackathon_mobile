@@ -56,10 +56,14 @@ class RecapProvider with ChangeNotifier {
         },
       );
       final responseData = jsonDecode(response.body)['data'];
+
+      if (response.statusCode != 200) {
+        throw HttpException(jsonDecode(response.body)['message']);
+      }
       _setRecapData(responseData['project']['project_data']);
       notifyListeners();
     } catch (e) {
-      throw HttpException("Veuillez réessayer plus tard!");
+      throw HttpException(e.toString());
     }
   }
 }
