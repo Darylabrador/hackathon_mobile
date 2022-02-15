@@ -1,5 +1,16 @@
 class ValidatorService {
-  static String? validateEmail(String? value) {
+  static ValidatorService _instance = ValidatorService._internal();
+
+  ValidatorService._internal();
+
+  static ValidatorService getInstance() {
+    if (_instance == null) {
+      _instance = ValidatorService._internal();
+    }
+    return _instance;
+  }
+
+  String? validateEmail(String? value) {
     String pattern =
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
         r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
@@ -17,7 +28,7 @@ class ValidatorService {
     }
   }
 
-  static String? validatePassword(String? value) {
+  String? validatePassword(String? value) {
     if (value!.trim().isEmpty) {
       return "Veuillez saisir le mot de passe";
     }
@@ -27,14 +38,14 @@ class ValidatorService {
     return null;
   }
 
-  static String? validateField(String? value) {
+  String? validateField(String? value) {
     if (value!.trim().isEmpty) {
       return "Veuillez saisir une valeur";
     }
     return null;
   }
 
-  static String? validateAge(String? value) {
+  String? validateAge(String? value) {
     if (value!.trim().isEmpty) {
       return 'Veuillez saisir votre age';
     }

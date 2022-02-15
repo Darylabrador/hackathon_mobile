@@ -1,7 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class RouteService {
-  static welcomeRoute(String routeName, BuildContext context) {
+  static RouteService _instance = RouteService._internal();
+
+  RouteService._internal();
+
+  static RouteService getInstance() {
+    if (_instance == null) {
+      _instance = RouteService._internal();
+    }
+    return _instance;
+  }
+
+  welcomeRoute(String routeName, BuildContext context) {
     if (ModalRoute.of(context)!.settings.name.toString() == "/" ||
         ModalRoute.of(context)!.settings.name.toString() == routeName) {
       return;
@@ -11,7 +22,7 @@ class RouteService {
     );
   }
 
-  static generalRoute(String routeName, BuildContext context) {
+  generalRoute(String routeName, BuildContext context) {
     if (ModalRoute.of(context)!.settings.name.toString() == routeName) {
       return;
     }

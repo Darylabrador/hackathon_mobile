@@ -20,6 +20,7 @@ class _ActResetFormState extends State<ActResetForm> {
   final _codeController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
+  ValidatorService validator = ValidatorService.getInstance();
   var _loading = false;
 
   Future<void> _submitHandler(BuildContext context) async {
@@ -29,8 +30,12 @@ class _ActResetFormState extends State<ActResetForm> {
 
     try {
       if (!_formKey.currentState!.validate()) {
+        setState(() {
+          _loading = false;
+        });
         return;
       }
+      
       _formKey.currentState!.save();
 
       final result = await Provider.of<ResetPwdForgottenProvider>(
@@ -76,7 +81,7 @@ class _ActResetFormState extends State<ActResetForm> {
             ),
             textInputAction: TextInputAction.done,
             validator: (value) {
-              return ValidatorService.validateField(value);
+              return validator.validateField(value);
             },
           ),
           const SizedBox(height: 5),
@@ -89,7 +94,7 @@ class _ActResetFormState extends State<ActResetForm> {
             textInputAction: TextInputAction.done,
             obscureText: true,
             validator: (value) {
-              return ValidatorService.validatePassword(value);
+              return validator.validatePassword(value);
             },
           ),
           const SizedBox(height: 5),
@@ -102,7 +107,7 @@ class _ActResetFormState extends State<ActResetForm> {
             textInputAction: TextInputAction.done,
             obscureText: true,
             validator: (value) {
-              return ValidatorService.validatePassword(value);
+              return validator.validatePassword(value);
             },
           ),
           const SizedBox(height: 30),

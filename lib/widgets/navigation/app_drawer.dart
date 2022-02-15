@@ -23,6 +23,8 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RouteService router = RouteService.getInstance();
+
     return Theme(
       data: Theme.of(customContext ?? context).copyWith(
         hoverColor: Colors.grey[800],
@@ -82,7 +84,7 @@ class AppDrawer extends StatelessWidget {
                           ],
                         ),
                         onDoubleTap: () {
-                          RouteService.generalRoute(
+                          router.generalRoute(
                             AccountSettingsScreen.routeName,
                             customContext ?? context,
                           );
@@ -125,7 +127,7 @@ class AppDrawer extends StatelessWidget {
                 style: Theme.of(customContext ?? context).textTheme.headline4,
               ),
               onTap: () {
-                RouteService.welcomeRoute(
+                router.welcomeRoute(
                   DashboardScreen.routeName,
                   customContext ?? context,
                 );
@@ -141,7 +143,7 @@ class AppDrawer extends StatelessWidget {
                 style: Theme.of(customContext ?? context).textTheme.headline4,
               ),
               onTap: () {
-                RouteService.generalRoute(
+                router.generalRoute(
                   ProjectScreen.routeName,
                   customContext ?? context,
                 );
@@ -157,7 +159,7 @@ class AppDrawer extends StatelessWidget {
                 style: Theme.of(customContext ?? context).textTheme.headline4,
               ),
               onTap: () {
-                RouteService.generalRoute(
+                router.generalRoute(
                   RecapitulatifScreen.routeName,
                   customContext ?? context,
                 );
@@ -173,7 +175,7 @@ class AppDrawer extends StatelessWidget {
                 style: Theme.of(customContext ?? context).textTheme.headline4,
               ),
               onTap: () {
-                RouteService.generalRoute(
+                router.generalRoute(
                   TeamManagementScreen.routeName,
                   customContext ?? context,
                 );
@@ -189,7 +191,7 @@ class AppDrawer extends StatelessWidget {
                 style: Theme.of(customContext ?? context).textTheme.headline4,
               ),
               onTap: () {
-                RouteService.generalRoute(
+                router.generalRoute(
                   AccountSettingsScreen.routeName,
                   customContext ?? context,
                 );

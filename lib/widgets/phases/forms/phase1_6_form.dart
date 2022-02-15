@@ -29,6 +29,7 @@ class Phase16Form extends StatefulWidget {
 class _Phase16FormState extends State<Phase16Form> {
   final _formKey = GlobalKey<FormState>();
   final _contenuController = TextEditingController();
+  ValidatorService validator = ValidatorService.getInstance();
 
   var _isInit = true;
   var _data = {};
@@ -121,7 +122,7 @@ class _Phase16FormState extends State<Phase16Form> {
             hintText:
                 "Qu’apportez-vous de mieux, que permettez-vous à vos utilisateurs ?",
             controller: _contenuController,
-            validator: (value) => ValidatorService.validateField(value),
+            validator: (value) => validator.validateField(value),
             onChanged: (value) => onChangeContenuValue(value),
           ),
           const SizedBox(height: 30),

@@ -29,6 +29,7 @@ class Phase12Form extends StatefulWidget {
 class _Phase12FormState extends State<Phase12Form> {
   final _formKey = GlobalKey<FormState>();
   final _quoiController = TextEditingController();
+  ValidatorService validator = ValidatorService.getInstance();
 
   var _isInit = true;
   var _data = {};
@@ -106,7 +107,7 @@ class _Phase12FormState extends State<Phase12Form> {
             hintText:
                 "Détaillez votre offre avec des mots simples et clairs, comme par exemple : « Ce mini-guide de questions vous permet de construire une présentation détaillée de votre projet. il est composé de 3 phases clés amenant à une présentation finale idéale pour convaincre.",
             controller: _quoiController,
-            validator: (value) => ValidatorService.validateField(value),
+            validator: (value) => validator.validateField(value),
             onChanged: (value) => onChangeValue(value),
           ),
           CustomButtonNextPhase(

@@ -19,6 +19,8 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  ValidatorService validator = ValidatorService.getInstance();
+
   var _loading = false;
 
   Future<void> _submitHandler(BuildContext context) async {
@@ -27,6 +29,9 @@ class _AuthFormState extends State<AuthForm> {
     });
     try {
       if (!_formKey.currentState!.validate()) {
+        setState(() {
+          _loading = false;
+        });
         return;
       }
       _formKey.currentState!.save();
@@ -93,7 +98,7 @@ class _AuthFormState extends State<AuthForm> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
-              return ValidatorService.validateEmail(value);
+              return validator.validateEmail(value);
             },
           ),
           const SizedBox(height: 5),
@@ -104,7 +109,7 @@ class _AuthFormState extends State<AuthForm> {
             textInputAction: TextInputAction.done,
             obscureText: true,
             validator: (value) {
-              return ValidatorService.validatePassword(value);
+              return validator.validatePassword(value);
             },
           ),
           const SizedBox(height: 40),

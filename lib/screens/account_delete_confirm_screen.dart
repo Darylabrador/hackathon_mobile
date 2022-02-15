@@ -28,6 +28,8 @@ class _AccountDeleteConfirmScreenState
   final _passwordConfirmController = TextEditingController();
   var _loading = false;
 
+  ValidatorService validator = ValidatorService.getInstance();
+
   Future<void> _submit(BuildContext context) async {
     setState(() {
       _loading = true;
@@ -79,6 +81,7 @@ class _AccountDeleteConfirmScreenState
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -107,15 +110,13 @@ class _AccountDeleteConfirmScreenState
                       labelText: "Mot de passe",
                       controller: _passwordController,
                       obscureText: true,
-                      validator: (value) =>
-                          ValidatorService.validateField(value)),
+                      validator: (value) => validator.validateField(value)),
                   const SizedBox(height: 10),
                   CustomTextFormField(
                       labelText: "Confirmation mot de passe",
                       controller: _passwordConfirmController,
                       obscureText: true,
-                      validator: (value) =>
-                          ValidatorService.validateField(value)),
+                      validator: (value) => validator.validateField(value)),
                   const SizedBox(height: 20),
                   buildButtonorLoader(context),
                 ],

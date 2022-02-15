@@ -19,6 +19,7 @@ class AskResetForm extends StatefulWidget {
 class _AskResetFormState extends State<AskResetForm> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  ValidatorService validator = ValidatorService.getInstance();
 
   var _loading = false;
 
@@ -29,8 +30,12 @@ class _AskResetFormState extends State<AskResetForm> {
 
     try {
       if (!_formKey.currentState!.validate()) {
+        setState(() {
+          _loading = false;
+        });
         return;
       }
+      
       _formKey.currentState!.save();
 
       final result = await Provider.of<ResetPwdForgottenProvider>(
@@ -68,7 +73,7 @@ class _AskResetFormState extends State<AskResetForm> {
             textInputAction: TextInputAction.done,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
-              return ValidatorService.validateEmail(value);
+              return validator.validateEmail(value);
             },
           ),
           const SizedBox(height: 30),

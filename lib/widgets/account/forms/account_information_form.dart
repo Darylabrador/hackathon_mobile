@@ -29,6 +29,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
   final _firstnameController = TextEditingController();
   final _emailController = TextEditingController();
   final _yearOldController = TextEditingController();
+  ValidatorService validator = ValidatorService.getInstance();
 
   late Gender _selectedGender;
   late User _savedData;
@@ -94,10 +95,14 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
         _isValid = false;
       });
     }
-
+    
     if (!_formKey.currentState!.validate()) {
+      setState(() {
+        _loading = false;
+      });
       return;
     }
+
     _formKey.currentState!.save();
 
     try {
@@ -150,25 +155,25 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
             CustomTextFormField(
               labelText: "Votre nom de famille",
               controller: _surnameController,
-              validator: (value) => ValidatorService.validateField(value),
+              validator: (value) => validator.validateField(value),
             ),
             const SizedBox(height: 10),
             CustomTextFormField(
               labelText: "Votre prénom",
               controller: _firstnameController,
-              validator: (value) => ValidatorService.validateField(value),
+              validator: (value) => validator.validateField(value),
             ),
             const SizedBox(height: 10),
             CustomTextFormField(
               labelText: "Votre adresse e-mail",
               controller: _emailController,
-              validator: (value) => ValidatorService.validateEmail(value),
+              validator: (value) => validator.validateEmail(value),
             ),
             const SizedBox(height: 10),
             CustomTextFormField(
               labelText: "Votre age",
               controller: _yearOldController,
-              validator: (value) => ValidatorService.validateAge(value),
+              validator: (value) => validator.validateAge(value),
             ),
             const SizedBox(height: 10),
             GenderSelectInput(
